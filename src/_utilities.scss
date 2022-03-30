@@ -1,0 +1,29 @@
+:root{
+    --primary-color: #1D4ED8;
+    --txt-color-primary: #191D23;
+    --txt-color-secondary: #323A46;
+  }
+
+.container{
+    padding: 0 3rem;
+    max-width: 150rem;
+    margin: 0 auto;
+}
+
+h1{
+    font-size: 4.8rem;
+    color: var(--txt-color-primary);
+    line-height: 1;
+
+    @media only screen and (max-width: 500px) {
+        font-size: 5rem;
+    }
+}
+
+h2{
+    
+}
+
+h3{
+    
+}

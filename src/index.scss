@@ -1,0 +1,118 @@
+@import 'mixin';
+@import 'utilities';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+::selection{
+  background: var(--primary-color);
+  color: #fff;
+}
+
+*,*::after,*::before{
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  word-break: break-word;
+}
+
+*:focus {
+  outline: 0;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+display: block;
+}
+
+// SCROLLBAR
+
+::-webkit-scrollbar {
+  width: .5vw;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a00d23;
+}
+
+html{
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scrollbar-color: #fff var(--primary-color);
+  scrollbar-width: normal;
+
+  @include respond(tab-land){
+    font-size: 60%;
+  }
+
+  @include respond(tab-port){
+    font-size: 55%;
+  }
+}
+
+html.no-scroll{
+  overflow: hidden;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  background: #fff;
+}
+
+body.no-scroll{
+  overflow: hidden;
+}
+
+img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  max-width: 100%;
+}
+
+a{
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+}
+
+button{
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-family: inherit;
+}
+
+button[disabled]{
+  cursor: default;
+}
+
+p{
+  line-height: 1.7;
+}
+
+ul, ol{
+  list-style: none;
+}
+
+input, textarea{
+  font-family: inherit;
+}
