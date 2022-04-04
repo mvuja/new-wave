@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './_card.scss';
 
 const Card = (props) => {
+
     return ( 
         <li className='card'>
             <img className='card--img' src={props.img} alt={props.title} />
@@ -12,10 +13,10 @@ const Card = (props) => {
             <p className="card--category">{props.category}</p>
             <div className="desc-addToCart">
                 <p className="card--desc">{props.desc}</p>
-                <button className='card--addToCart'>Add to cart</button>
+                <button onClick={() => props.addToCart(props.id, props.title, props.price, props.img, props.desc)} className='card--addToCart'>Add to cart</button>
             </div>
         </li>
-     );
+     )
 }
  
 export default Card;

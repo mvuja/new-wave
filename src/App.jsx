@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Navbar from "./components/Navbar/Navbar"
 import Products from "./components/Products/Products"
+import Cart from "./components/Cart/Cart"
 import Footer from "./components/Footer/Footer"
 
 function App() {
@@ -9,18 +10,39 @@ function App() {
 
   const [products, setProducts] = useState([])
 
+  const [cart, setCart] = useState(getInitialProducts())
+
   useEffect(() => {
     fetch(url).then((res) => {
         return res.json()
     }).then((data) => {
       setProducts(data)
     })
-}, [url])
+  }, [url])
+
+
+  function getInitialProducts() {
+    const temp = localStorage.getItem('products')
+    const savedProducts = JSON.parse(temp)
+    return savedProducts || []
+  }
+
+  useEffect(() => {
+      const temp = JSON.stringify(cart)
+      localStorage.setItem('products', temp)
+
+      console.log(cart)
+  }, [cart]) 
+
+  const setCartHandler = set => {
+    setCart(set)
+  }
 
   return (
     <>
       <Navbar />
-      <Products products={products} />
+      <Products products={products} cart={cart} setCartHandler={setCartHandler} />
+      <Cart cart={cart} />
       <Footer />
     </>
   )
