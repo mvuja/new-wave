@@ -12,6 +12,8 @@ function App() {
 
   const [cart, setCart] = useState(getInitialProducts())
 
+  const [cartIsOpen, setCartIsOpen] = useState(false)
+
   useEffect(() => {
     fetch(url).then((res) => {
         return res.json()
@@ -38,11 +40,16 @@ function App() {
     setCart(set)
   }
 
+  const setCartIsOpenHandler = set => {
+    setCartIsOpen(set)
+    console.log(cartIsOpen)
+  }
+
   return (
     <>
-      <Navbar />
+      <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} />
       <Products products={products} cart={cart} setCartHandler={setCartHandler} />
-      <Cart cart={cart} />
+      <Cart cart={cart} cartIsOpen={cartIsOpen} />
       <Footer />
     </>
   )
