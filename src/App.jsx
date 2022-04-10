@@ -32,8 +32,6 @@ function App() {
   useEffect(() => {
       const temp = JSON.stringify(cart)
       localStorage.setItem('products', temp)
-
-      console.log(cart)
   }, [cart]) 
 
   const setCartHandler = set => {
@@ -42,14 +40,13 @@ function App() {
 
   const setCartIsOpenHandler = set => {
     setCartIsOpen(set)
-    console.log(cartIsOpen)
   }
 
   return (
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} />
       <Products products={products} cart={cart} setCartHandler={setCartHandler} />
-      <Cart cart={cart} cartIsOpen={cartIsOpen} />
+      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} />
       <Footer />
     </>
   )

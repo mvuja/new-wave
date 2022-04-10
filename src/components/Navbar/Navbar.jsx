@@ -7,10 +7,8 @@ const Navbar = props => {
     const CartOpenHandler = () => {
         if(props.cartIsOpen){
             props.setCartIsOpenHandler(false)
-            console.log('djes')
         }else{
             props.setCartIsOpenHandler(true)
-            console.log('djes22')
         }
     }
 

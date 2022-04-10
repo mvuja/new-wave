@@ -7,6 +7,7 @@
     background: #fff;
     box-shadow: -1rem 0 1.5rem rgba($color: #000000, $alpha: .07);
     transition: right .3s ease;
+    padding: 1rem;
 
     &.open{
         right: 0;
@@ -18,7 +19,54 @@
         overscroll-behavior: contain;
         padding: 0 3rem;
 
+        .empty-shop{
+            font-size: 1.8rem;
+            line-height: 1.5;
+        }
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: #D0D5DD;
+            border-radius: 100px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: #4B5768;
+            border-radius: 100px;
+        }
+        
+        &::-webkit-scrollbar-thumb:hover {
+            background: #333d49;
+        }
+
         li{
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .counter{
+                position: absolute;
+                background: red;
+                width: 2rem;
+                height: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 1.4rem;
+                font-weight: 700;
+                border-radius: 100px;
+                top: 0;
+                right: 0;
+            }
+
+            .trash{
+                font-size: 2rem;
+                padding: 1rem;
+            }
 
             &:not(:last-child){
                 margin-bottom: 3rem;

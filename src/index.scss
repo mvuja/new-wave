@@ -35,15 +35,17 @@ display: block;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff;
+  background: #D0D5DD;
+  border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
+  background: #4B5768;
+  border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a00d23;
+  background: #333d49;
 }
 
 html{
