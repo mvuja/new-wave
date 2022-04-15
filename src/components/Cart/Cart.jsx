@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './_cart.scss'
 
-const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
+const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice }) => {
 
 
 
@@ -26,7 +26,7 @@ const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
                                 <img className='item-img' src={el.image} alt={el.title} />
                                 <p className='item-title'>{el.title}</p>
                                 <p className='item-desc'>{el.desc}</p>
-                                <p className='item-price'>{el.price}</p>
+                                <p className='item-price'>${el.price}</p>
                             </div>
                             <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>T</button>
                             <p className="counter">{el.counter}</p>
@@ -35,10 +35,12 @@ const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
                     :
                     <p className='empty-shop'>Currently there are no products. Please choose products from the list</p>
                 }
-
-
-
             </div>
+
+            {
+                cart.length &&
+                <div className='cart-total'>TOTAL: ${cartPrice}</div>
+            }
 
         </aside>
      )
