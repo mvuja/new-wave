@@ -9,6 +9,7 @@ function App() {
   const url = `https://fakestoreapi.com/products`
 
   const [products, setProducts] = useState([])
+  const [cartCounter, setCartCounter] = useState(getInitialCounter())
 
   const [cart, setCart] = useState(getInitialProducts())
 
@@ -22,11 +23,28 @@ function App() {
     })
   }, [url])
 
+  useEffect(() => {
+    const temp = JSON.stringify(cartCounter)
+    localStorage.setItem('cartCounter', temp)
+    let counterHolder = 0
+    cart?.map(el => {
+      counterHolder = counterHolder + el.counter
+      return counterHolder
+    })
+    setCartCounter(counterHolder)
+  }, [cart])
+
 
   function getInitialProducts() {
     const temp = localStorage.getItem('products')
     const savedProducts = JSON.parse(temp)
     return savedProducts || []
+  }
+
+  function getInitialCounter() {
+    const temp = localStorage.getItem('cartCounter')
+    const savedCounter = JSON.parse(temp)
+    return savedCounter || 0
   }
 
   useEffect(() => {
@@ -44,7 +62,7 @@ function App() {
 
   return (
     <>
-      <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} />
+      <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
       <Products products={products} cart={cart} setCartHandler={setCartHandler} />
       <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} />
       <Footer />

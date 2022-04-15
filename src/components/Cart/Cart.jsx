@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './_cart.scss'
-import { v4 as uuidv4 } from 'uuid';
 
 const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
+
 
 
     const setNewCartHadnler = id => {
@@ -13,17 +13,14 @@ const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
         )
     }
 
-    useEffect(() => {
-        // console.table(cart)
-    }, [cart])
 
     return ( 
         <aside id="cart" className={`${cartIsOpen && 'open'}`}>
-            <ul>
+            <div className="cart-container">
                 {
                     cart.length ?
                     cart?.map( el => (
-                        <li key={el.id}>
+                        <article key={el.id}>
                             <div className="content">
 
                                 <img className='item-img' src={el.image} alt={el.title} />
@@ -33,12 +30,16 @@ const Cart = ({ cart, cartIsOpen, setCartHandler }) => {
                             </div>
                             <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>T</button>
                             <p className="counter">{el.counter}</p>
-                        </li>
+                        </article>
                     ))
                     :
                     <p className='empty-shop'>Currently there are no products. Please choose products from the list</p>
                 }
-            </ul>
+
+
+
+            </div>
+
         </aside>
      )
 }

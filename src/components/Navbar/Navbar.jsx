@@ -17,7 +17,13 @@ const Navbar = props => {
         <nav>
             <div className="container">
                 <p className='logo'>LOGO</p>
-                <button className='cart' onClick={CartOpenHandler}>C</button>
+                <button className='cart' onClick={CartOpenHandler}>
+                    C 
+                    {
+                        props.cartCounter !== 0 &&
+                        <span className='cart-counter'>{props.cartCounter}</span>
+                    }
+                </button>
             </div>
         </nav>
     )

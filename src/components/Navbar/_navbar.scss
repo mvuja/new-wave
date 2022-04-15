@@ -23,6 +23,23 @@ nav{
             padding: 1rem 1.6rem;
             background-color: #fff;
             border: 1px solid #000;
+            position: relative;
+
+            .cart-counter{
+                position: absolute;
+                top: -1rem;
+                right: -1rem;
+                background: red;
+                width: 2rem;
+                height: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 1.4rem;
+                font-weight: 700;
+                border-radius: 100px;
+            }
         }
     }
 }

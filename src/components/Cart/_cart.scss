@@ -13,7 +13,7 @@
         right: 0;
     }
     
-    ul{
+    .cart-container{
         height: 100%;
         overflow-y: scroll;
         overscroll-behavior: contain;
@@ -42,7 +42,7 @@
             background: #333d49;
         }
 
-        li{
+        article{
             display: flex;
             align-items: center;
             position: relative;
