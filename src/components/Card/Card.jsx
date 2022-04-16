@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './_card.scss';
+import Button from '../UI/Button';
 
 const Card = (props) => {
 
@@ -13,7 +14,7 @@ const Card = (props) => {
             <p className="card--category">{props.category}</p>
             <div className="desc-addToCart">
                 <p className="card--desc">{props.desc}</p>
-                <button onClick={() => props.addToCart(props.id, props.title, props.price, props.img, props.desc)} className='card--addToCart'>Add to cart</button>
+                <Button onClick={() => props.addToCart(props.id, props.title, props.price, props.img, props.desc)}>Add to cart</Button>
             </div>
         </li>
      )

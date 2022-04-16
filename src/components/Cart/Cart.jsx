@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './_cart.scss'
+import Button from '../UI/Button';
 
 const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice }) => {
 
@@ -39,7 +40,10 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice }) => {
 
             {
                 cart.length &&
-                <div className='cart-total'>TOTAL: ${cartPrice}</div>
+                <div className="cart-footer">
+                    <p className='cart-total'>TOTAL: ${cartPrice}</p>
+                    <Button>Purchase</Button>
+                </div>
             }
 
         </aside>
