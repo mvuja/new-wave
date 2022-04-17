@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import './_navbar.scss'
+import cartIcon from '../../Assets/cart-icon.svg'
+import logo from '../../Assets/logo.svg'
 
 const Navbar = props => {
 
@@ -16,9 +18,9 @@ const Navbar = props => {
     return (  
         <nav>
             <div className="container">
-                <p className='logo'>LOGO</p>
+                <img src={logo} alt="New Wave" className="logo" />
                 <button className='cart' onClick={CartOpenHandler}>
-                    C 
+                    <img src={cartIcon} alt="" /> 
                     {
                         props.cartCounter !== 0 &&
                         <span className='cart-counter'>{props.cartCounter}</span>

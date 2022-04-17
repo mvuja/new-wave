@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar/Navbar"
 import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
 import Footer from "./components/Footer/Footer"
+import Toast from "./components/UI/Toast"
+import Discount from "./components/Discount/Discount"
 
 function App() {
 
@@ -15,6 +17,7 @@ function App() {
   const [cart, setCart] = useState(getInitialProducts())
 
   const [cartIsOpen, setCartIsOpen] = useState(false)
+  const [toastIsOpen, setToastIsOpen] = useState(false)
 
   useEffect(() => {
     fetch(url).then((res) => {
@@ -82,11 +85,26 @@ function App() {
     setCartIsOpen(set)
   }
 
+  const checkoutHandler = () => {
+    setCartIsOpen(false)
+    setToastIsOpen(true)
+    setCart([])
+    setTimeout(() => {
+      setToastIsOpen(false)
+    }, 5000)
+  }
+
+  const closeToastHandler = () => {
+    setToastIsOpen(false)
+  }
+
   return (
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
       <Products products={products} cart={cart} setCartHandler={setCartHandler} />
-      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} />
+      <Discount />
+      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} />
+      <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} />
       <Footer />
     </>
   )

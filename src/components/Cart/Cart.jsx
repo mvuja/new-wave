@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './_cart.scss'
 import Button from '../UI/Button';
 
-const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice }) => {
+const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) => {
 
 
 
@@ -39,10 +39,10 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice }) => {
             </div>
 
             {
-                cart.length &&
+                cart.length > 0 &&
                 <div className="cart-footer">
                     <p className='cart-total'>TOTAL: ${cartPrice}</p>
-                    <Button>Purchase</Button>
+                    <Button onClick={checkoutHandler}>Purchase</Button>
                 </div>
             }
 
