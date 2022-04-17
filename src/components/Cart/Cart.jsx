@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './_cart.scss'
 import Button from '../UI/Button';
+import trash from '../../Assets/trash.svg'
 
 const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) => {
 
@@ -29,7 +30,9 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) 
                                 <p className='item-desc'>{el.desc}</p>
                                 <p className='item-price'>${el.price}</p>
                             </div>
-                            <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>T</button>
+                            <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>
+                                <img src={trash} alt="Trash item" />
+                            </button>
                             <p className="counter">{el.counter}</p>
                         </article>
                     ))
@@ -41,7 +44,7 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) 
             {
                 cart.length > 0 &&
                 <div className="cart-footer">
-                    <p className='cart-total'>TOTAL: ${cartPrice}</p>
+                    <p className='cart-total'>TOTAL: <span>${cartPrice}</span></p>
                     <Button onClick={checkoutHandler}>Purchase</Button>
                 </div>
             }
