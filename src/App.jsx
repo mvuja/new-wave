@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 import Navbar from "./components/Navbar/Navbar"
 import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
@@ -20,12 +21,17 @@ function App() {
   const [toastIsOpen, setToastIsOpen] = useState(false)
 
   useEffect(() => {
-    fetch(url).then((res) => {
+    trackPromise(
+      fetch(url).then((res) => {
         return res.json()
-    }).then((data) => {
-      setProducts(data)
-    })
+      }).then((data) => {
+        setProducts(data)
+      })
+    )
   }, [url])
+
+  
+  const { promiseInProgress } = usePromiseTracker()
 
   useEffect(() => {
     const temp = JSON.stringify(cartCounter)
@@ -98,12 +104,16 @@ function App() {
     setToastIsOpen(false)
   }
 
+  const closeCartHadnler = () => {
+    setCartIsOpen(false)
+  }
+
   return (
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
-      <Products products={products} cart={cart} setCartHandler={setCartHandler} />
+      <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
       <Discount />
-      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} />
+      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
       <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} />
       <Footer />
     </>

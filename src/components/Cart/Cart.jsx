@@ -3,7 +3,7 @@ import './_cart.scss'
 import Button from '../UI/Button';
 import trash from '../../Assets/trash.svg'
 
-const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) => {
+const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, closeCartHadnler }) => {
 
 
 
@@ -18,6 +18,10 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler }) 
 
     return ( 
         <aside id="cart" className={`${cartIsOpen && 'open'}`}>
+            <div className="cart-header">
+                <h2>Cart</h2>
+                <button className='close-cart' onClick={closeCartHadnler}>X</button>
+            </div>
             <div className="cart-container">
                 {
                     cart.length ?

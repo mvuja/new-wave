@@ -4,6 +4,19 @@
 
     .container{
 
+        #loader{
+            height: 100%;
+            min-height: 40rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .products-heading{
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
         .product-list{
             display: grid;
             grid-template-columns: repeat(3, 1fr);

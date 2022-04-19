@@ -17,6 +17,24 @@
         right: 0;
     }
 
+    .cart-header{
+        margin: 1rem 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--primary-color);
+        display: flex;
+        justify-content: space-between;
+
+        .close-cart{
+            background: transparent;
+            font-size: 2.4rem;
+            font-weight: 700;
+        }
+
+        h2{
+            font-size: 2.4rem;
+        }
+    }
+
     .cart-footer{
         display: flex;
         gap: 1rem;
@@ -46,6 +64,7 @@
         .empty-shop{
             font-size: 1.8rem;
             line-height: 1.5;
+            text-align: center;
         }
 
         &::-webkit-scrollbar {
