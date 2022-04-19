@@ -112,7 +112,7 @@ function App() {
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
       <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
-      <Discount />
+      {/* <Discount /> */}
       <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
       <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} />
       <Footer />
