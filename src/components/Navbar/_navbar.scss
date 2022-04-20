@@ -6,6 +6,7 @@ nav{
     background-color: #f3f3f3;
     height: 9.5rem;
     z-index: 999;
+    box-shadow: 0 1rem 3rem rgba($color: #000000, $alpha: .1);
 
     .container{
         display: flex;

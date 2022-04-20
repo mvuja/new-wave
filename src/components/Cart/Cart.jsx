@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import './_cart.scss'
 import Button from '../UI/Button';
 import trash from '../../Assets/trash.svg'

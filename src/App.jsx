@@ -5,17 +5,19 @@ import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
 import Footer from "./components/Footer/Footer"
 import Toast from "./components/UI/Toast"
-import Discount from "./components/Discount/Discount"
+// import Discount from "./components/Discount/Discount"
 
 function App() {
 
   const url = `https://fakestoreapi.com/products`
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState(null)
   
+  const [cart, setCart] = useState(getInitialProducts())
   const [cartCounter, setCartCounter] = useState(getInitialCounter())
   const [cartPrice, setCartPrice] = useState(getInitialPrice())
-  const [cart, setCart] = useState(getInitialProducts())
+
+  const [toastCounter, setToastCounter] = useState(0)
 
   const [cartIsOpen, setCartIsOpen] = useState(false)
   const [toastIsOpen, setToastIsOpen] = useState(false)
@@ -92,6 +94,7 @@ function App() {
   }
 
   const checkoutHandler = () => {
+    setToastCounter(cartCounter)
     setCartIsOpen(false)
     setToastIsOpen(true)
     setCart([])
@@ -114,7 +117,7 @@ function App() {
       <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
       {/* <Discount /> */}
       <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
-      <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} />
+      <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
       <Footer />
     </>
   )
