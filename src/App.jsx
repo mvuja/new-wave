@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
-import { usePromiseTracker, trackPromise } from "react-promise-tracker";
+import { usePromiseTracker, trackPromise } from "react-promise-tracker"
 import Navbar from "./components/Navbar/Navbar"
 import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
 import Footer from "./components/Footer/Footer"
 import Toast from "./components/UI/Toast"
 // import Discount from "./components/Discount/Discount"
+
+import Login from "./components/Pages/Login/Login"
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
   const [cartIsOpen, setCartIsOpen] = useState(false)
   const [toastIsOpen, setToastIsOpen] = useState(false)
 
+
+  // API FETCHING
   useEffect(() => {
     trackPromise(
       fetch(url).then((res) => {
@@ -111,14 +115,50 @@ function App() {
     setCartIsOpen(false)
   }
 
+  
+
+  // LOGIN
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn')
+
+    if(storedUserLoggedInInformation === '1'){
+      setIsLoggedIn(true)
+    }
+  }, [])
+
+  const loginHandler = (email, password) => {
+    // We should of course check email and password
+    // But it's just a dummy/ demo anyways
+    localStorage.setItem('isLoggedIn', '1')
+    setIsLoggedIn(true)
+  }
+
+  const logoutHandler = () => {
+    setIsLoggedIn(false)
+    localStorage.removeItem('isLoggedIn')
+  }
+
+
+
   return (
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
-      <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
-      {/* <Discount /> */}
-      <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
-      <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
-      <Footer />
+      {
+        isLoggedIn ?
+        <>
+          <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
+          {/* <Discount /> */}
+          <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
+          <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
+          <Footer />
+        </>
+        :
+        <Login onLogin={loginHandler} />
+      }
     </>
   )
 }

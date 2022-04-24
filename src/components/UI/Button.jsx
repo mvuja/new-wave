@@ -1,10 +1,10 @@
 import './_button.scss'
 import cartIconWhite from '../../Assets/cart-icon-white.svg'
 
-const Button = ({onClick, children}) => {
+const Button = ({onClick, children, type }) => {
 
     return (
-        <button onClick={onClick} className='main-btn'>
+        <button type={type} onClick={onClick} className='main-btn'>
             <img src={cartIconWhite} alt="cart icon" />
             {children}
         </button>

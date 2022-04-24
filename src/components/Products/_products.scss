@@ -14,7 +14,9 @@
 
         .products-heading{
             font-size: 3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .product-list{
