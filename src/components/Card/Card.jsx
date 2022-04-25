@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import './_card.scss';
 import Button from '../UI/Button';
 
+import { Link } from 'react-router-dom';
+
 const Card = (props) => {
 
     return ( 
         <li className='card'>
-            <img className='card--img' src={props.img} alt={props.title} />
+            <Link to={`product/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`} className="card--image-link">
+                <img className='card--img' src={props.img} alt={props.title} />
+            </Link>
             <div className="title-price">
-                <h4 className="card--title">{props.title}</h4>
+                <Link to={`product/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
+                    <h4 className="card--title">{props.title}</h4>
+                </Link>
                 <p className="card--price">${props.price}</p>
             </div>
             <p className="card--category">{props.category}</p>

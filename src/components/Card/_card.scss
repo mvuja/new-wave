@@ -4,6 +4,10 @@
     overflow: hidden;
     padding: 2rem;
 
+    &--image-link{
+        display: block;
+    }
+
     &--img{
         width: 100%;
         max-height: 20rem;

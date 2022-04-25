@@ -1,0 +1,40 @@
+.container{
+
+    .product-grid{
+        margin: 17rem 0 10rem;
+        display: grid;
+        grid-template-columns: 43% 1fr;
+        gap: 8rem;
+
+        .image-holder{
+            box-shadow: 0 1rem 2rem rgba($color: #000000, $alpha: .3);
+            border-radius: 2rem;
+            overflow: hidden;
+            padding: 3rem;
+            max-height: 50rem;
+
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .product-content{
+
+            .product-title{
+                font-size: 4rem;
+            }
+
+            .product-category{
+                font-size: 1.4rem;
+                margin-bottom: 2rem;
+            }
+
+            .product-desc{
+                font-size: 2rem;
+            }
+        }
+
+    }
+}

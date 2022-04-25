@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { usePromiseTracker, trackPromise } from "react-promise-tracker"
+import { Route, Switch } from 'react-router-dom'
+
 import Navbar from "./components/Navbar/Navbar"
 import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
@@ -8,6 +10,7 @@ import Toast from "./components/UI/Toast"
 // import Discount from "./components/Discount/Discount"
 
 import Login from "./components/Pages/Login/Login"
+import ProductPage from "./components/Pages/ProductPage/ProductPage"
 
 function App() {
 
@@ -32,6 +35,7 @@ function App() {
         return res.json()
       }).then((data) => {
         setProducts(data)
+        console.log(data)
       })
     )
   }, [url])
@@ -150,11 +154,36 @@ function App() {
       {
         isLoggedIn ?
         <>
-          <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
-          {/* <Discount /> */}
-          <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
-          <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
+          <Switch>
+            <Route exact path="/">
+              <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
+              <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
+              <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
+            </Route>
+            {/* <Route exact path='/product'>
+                <NotMatch/>
+            </Route> */}
+            {
+              // (promiseInProgress === true) ?
+              //   <Route path='/product'>
+              //     <ProductPage/>
+              //   </Route>
+              // :
+              products?.map(el => (
+                  <Route key={el.id} path={`/product/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
+                    <ProductPage el={el} />
+                  </Route>
+                ))
+            }
+            {/* <Route path="*" component={NotMatch}/> */}
+          </Switch>
           <Footer />
+
+
+          {/* <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} /> */}
+          {/* <Discount /> */}
+          {/* <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} /> */}
+          {/* <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} /> */}
         </>
         :
         <Login onLogin={loginHandler} />

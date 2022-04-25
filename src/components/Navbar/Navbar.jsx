@@ -3,6 +3,8 @@ import './_navbar.scss'
 import cartIcon from '../../Assets/cart-icon.svg'
 import logo from '../../Assets/logo.svg'
 
+import { Link } from 'react-router-dom'
+
 const Navbar = props => {
 
 
@@ -18,7 +20,9 @@ const Navbar = props => {
     return (  
         <nav>
             <div className="container">
-                <img src={logo} alt="New Wave" className="logo" />
+                <Link to='/'>
+                    <img src={logo} alt="New Wave" className="logo" />
+                </Link>
                 <button className='cart' onClick={CartOpenHandler}>
                     <img src={cartIcon} alt="" /> 
                     {
