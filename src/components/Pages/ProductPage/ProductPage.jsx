@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './_product-page.scss'
 
-const ProductPage = ({ el }) => {
+import Button from '../../UI/Button';
+
+const ProductPage = ({ el, addToCart }) => {
     return ( 
         <div className="container">
             <div className="product-grid">
@@ -12,6 +14,12 @@ const ProductPage = ({ el }) => {
                     <h2 className='product-title'>{el.title}</h2>
                     <p className='product-category'>{el.category}</p>
                     <p className='product-desc'>{el.description}</p>
+
+                    <form onSubmit={e => addToCart(el.id, el.title, el.price, el.image, el.description, e)} className="add-to-cart">
+                        <input type="number" max='10' min='1' step='1' defaultValue='1' />
+                        <Button>Add to cart</Button>
+                    </form>
+
                 </div>
             </div>
         </div>

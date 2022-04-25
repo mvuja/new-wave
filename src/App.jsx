@@ -43,6 +43,10 @@ function App() {
   
   const { promiseInProgress } = usePromiseTracker()
 
+
+
+
+  // LOCAL STORAGE
   useEffect(() => {
     const temp = JSON.stringify(cartCounter)
     localStorage.setItem('cartCounter', temp)
@@ -53,6 +57,7 @@ function App() {
     })
     setCartCounter(counterHolder)
   }, [cart])
+
 
   useEffect(() => {
     const temp = JSON.stringify(cartPrice)
@@ -93,6 +98,12 @@ function App() {
       localStorage.setItem('products', temp)
   }, [cart]) 
 
+
+
+
+
+
+  // HANDLERS
   const setCartHandler = set => {
     setCart(set)
   }
@@ -121,8 +132,9 @@ function App() {
 
   
 
-  // LOGIN
 
+
+  // LOGIN
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   
   
@@ -148,6 +160,44 @@ function App() {
 
 
 
+
+
+
+  // ADD TO CART
+  const addToCart = (id, title, price, img, desc, e) => {
+    if(e){
+      e.preventDefault()
+    }
+    const newCart = {
+        id: id,
+        title: title,
+        price: price,
+        image: img,
+        desc: desc,
+        counter: 1
+    }
+    
+    const existingCartItemIntex = cart.findIndex(item => item.id === id)
+    const existingCartItem = cart[existingCartItemIntex]
+
+    let updatedItems
+    
+    if(existingCartItem){
+        const updatedItem = {
+            ...existingCartItem,
+            counter: existingCartItem.counter + 1
+        }
+        updatedItems = [...cart]
+        updatedItems[existingCartItemIntex] = updatedItem
+    }else{
+        updatedItems = cart.concat(newCart)
+    }
+
+    setCartHandler(updatedItems)
+  }
+
+
+
   return (
     <>
       <Navbar setCartIsOpenHandler={setCartIsOpenHandler} cartIsOpen={cartIsOpen} cartCounter={cartCounter} />
@@ -156,9 +206,7 @@ function App() {
         <>
           <Switch>
             <Route exact path="/">
-              <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} />
-              <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
-              <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
+              <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} addToCart={addToCart} />
             </Route>
             {/* <Route exact path='/product'>
                 <NotMatch/>
@@ -171,12 +219,14 @@ function App() {
               // :
               products?.map(el => (
                   <Route key={el.id} path={`/product/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
-                    <ProductPage el={el} />
+                    <ProductPage el={el} addToCart={addToCart} />
                   </Route>
                 ))
             }
             {/* <Route path="*" component={NotMatch}/> */}
           </Switch>
+          <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
+          <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
           <Footer />
 
 

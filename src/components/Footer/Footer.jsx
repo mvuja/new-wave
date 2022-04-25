@@ -9,7 +9,7 @@ const Footer = props => {
                     <a href="#">Terms of Use</a>
                     <a href="#">Privacy Policy</a>
                 </div>
-                <p className="copy">2021 Designed by DVC Solutions</p>
+                <p className="copy">2022 Designed by m.vuja</p>
             </div>
         </footer>
      )
