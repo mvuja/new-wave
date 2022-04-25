@@ -35,7 +35,6 @@ function App() {
         return res.json()
       }).then((data) => {
         setProducts(data)
-        console.log(data)
       })
     )
   }, [url])
@@ -164,36 +163,72 @@ function App() {
 
 
   // ADD TO CART
-  const addToCart = (id, title, price, img, desc, e) => {
+  const addToCart = (id, title, price, img, desc, e, quantity) => {
     if(e){
       e.preventDefault()
     }
-    const newCart = {
+
+    let newCart = {}
+
+    if(quantity){
+      newCart = {
+        id: id,
+        title: title,
+        price: price,
+        image: img,
+        desc: desc,
+        counter: quantity
+      }
+    }else{
+      newCart = {
         id: id,
         title: title,
         price: price,
         image: img,
         desc: desc,
         counter: 1
+      }
     }
     
     const existingCartItemIntex = cart.findIndex(item => item.id === id)
     const existingCartItem = cart[existingCartItemIntex]
 
     let updatedItems
-    
-    if(existingCartItem){
+
+    if(quantity){
+      if(existingCartItem){
+        const updatedItem = {
+            ...existingCartItem,
+            counter: existingCartItem.counter + quantity
+        }
+        updatedItems = [...cart]
+        updatedItems[existingCartItemIntex] = updatedItem
+      }else{
+            updatedItems = cart.concat(newCart)
+      }
+    }else{
+      if(existingCartItem){
         const updatedItem = {
             ...existingCartItem,
             counter: existingCartItem.counter + 1
         }
         updatedItems = [...cart]
         updatedItems[existingCartItemIntex] = updatedItem
-    }else{
-        updatedItems = cart.concat(newCart)
+      }else{
+          updatedItems = cart.concat(newCart)
+      }
     }
-
+    
     setCartHandler(updatedItems)
+  }
+
+
+
+  // USER'S ENTERED NAME FOR TOAST NOTIFICATION
+  const [enteredName, setEnteredName] = useState('')
+
+  const setNameHandler = name => {
+    setEnteredName(name)
   }
 
 
@@ -226,7 +261,7 @@ function App() {
             {/* <Route path="*" component={NotMatch}/> */}
           </Switch>
           <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
-          <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} />
+          <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} enteredName={enteredName} />
           <Footer />
 
 
@@ -236,7 +271,7 @@ function App() {
           {/* <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} /> */}
         </>
         :
-        <Login onLogin={loginHandler} />
+        <Login onLogin={loginHandler} setNameHandler={setNameHandler} enteredName={enteredName} />
       }
     </>
   )

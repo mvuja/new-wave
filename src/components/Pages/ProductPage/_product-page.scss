@@ -34,6 +34,35 @@
             .product-desc{
                 font-size: 2rem;
             }
+
+
+            .add-to-cart{
+                display: flex;
+                gap: 1rem;
+                margin-top: 5rem;
+
+                .quantity-container{
+                    display: flex;
+
+                    button{
+                        padding: 1rem;
+                        background: var(--primary-color);
+                        color: #fff;
+                        font-weight: 700;
+                        font-size: 2rem;
+                    }
+
+                    .product-quantity{
+                        padding: 0 1rem;
+                        font-size: 1.6rem;
+                        border: none;
+                        box-shadow: 0 0.3rem 0.7rem rgb(0 0 0 / 18%);
+                        border-radius: 0.2rem;
+                    }
+                }
+
+
+            }
         }
 
     }

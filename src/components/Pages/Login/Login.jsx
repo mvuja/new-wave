@@ -3,12 +3,10 @@ import './_login.scss'
 import Button from '../../UI/Button';
 
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, enteredName, setNameHandler }) => {
 
     const [enteredEmail, setEnteredEmail] = useState('')
-    const [emailIsValid, setEmailIsValid] = useState()
     const [enteredPassword, setEnteredPassword] = useState('')
-    const [passwordIsValid, setPasswordIsValid] = useState()
     const [formIsValid, setFormIsValid] = useState(false)
   
     useEffect(() => {
@@ -16,7 +14,11 @@ const Login = ({ onLogin }) => {
           enteredEmail.includes('@') && enteredPassword.trim().length > 7
         )  
     }, [enteredEmail, enteredPassword])
-  
+
+    const nameChangeHandler = (event) => {
+      setNameHandler(event.target.value)
+    }
+
     const emailChangeHandler = (event) => {
       setEnteredEmail(event.target.value)
     }
@@ -24,15 +26,7 @@ const Login = ({ onLogin }) => {
     const passwordChangeHandler = (event) => {
       setEnteredPassword(event.target.value)
     }
-  
-    const validateEmailHandler = () => {
-      setEmailIsValid(enteredEmail.includes('@'))
-    }
-  
-    const validatePasswordHandler = () => {
-      setPasswordIsValid(enteredPassword.trim().length > 7)
-    }
-  
+
     const submitHandler = (event) => {
       event.preventDefault()
       if(formIsValid){
@@ -46,13 +40,22 @@ const Login = ({ onLogin }) => {
         <div className="container">
             <form className='login-form' onSubmit={submitHandler}>
                 <div>
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={enteredName}
+                        onChange={nameChangeHandler}
+                        required
+                    />
+                </div>
+                <div>
                     <label htmlFor="email">E-Mail</label>
                     <input
                         type="email"
                         id="email"
                         value={enteredEmail}
                         onChange={emailChangeHandler}
-                        onBlur={validateEmailHandler}
                         required
                     />
                 </div>
@@ -63,7 +66,6 @@ const Login = ({ onLogin }) => {
                         id="password"
                         value={enteredPassword}
                         onChange={passwordChangeHandler}
-                        onBlur={validatePasswordHandler}
                         required
                     />
                     <p>Password must be at least 8 characters long</p>
