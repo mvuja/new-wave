@@ -8,11 +8,11 @@ const Card = (props) => {
 
     return ( 
         <li className='card'>
-            <Link to={`product/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`} className="card--image-link">
+            <Link to={`/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`} className="card--image-link">
                 <img className='card--img' src={props.img} alt={props.title} />
             </Link>
             <div className="title-price">
-                <Link to={`product/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
+                <Link to={`/${props.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
                     <h4 className="card--title">{props.title}</h4>
                 </Link>
                 <p className="card--price">${props.price}</p>

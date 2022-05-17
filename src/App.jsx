@@ -253,8 +253,8 @@ function App() {
               //   </Route>
               // :
               products?.map(el => (
-                  <Route key={el.id} path={`/product/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
-                    <ProductPage el={el} addToCart={addToCart} />
+                  <Route key={el.id} path={`/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
+                    <ProductPage el={el} addToCart={addToCart} products={products} />
                   </Route>
                 ))
             }

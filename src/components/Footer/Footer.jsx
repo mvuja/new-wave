@@ -5,11 +5,7 @@ const Footer = props => {
     return ( 
         <footer>
             <div className="container">
-                <div className="footer-links">
-                    <a href="#">Terms of Use</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
-                <p className="copy">2022 Designed by m.vuja</p>
+                <p className="copy">© 2022 New Wave - All rights reserved.</p>
             </div>
         </footer>
      )

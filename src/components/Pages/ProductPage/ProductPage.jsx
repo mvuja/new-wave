@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './_product-page.scss'
 
 import Button from '../../UI/Button';
+import Card from '../../Card/Card'
 
-const ProductPage = ({ el, addToCart }) => {
+import { v4 as uuidv4 } from 'uuid';
+
+const ProductPage = ({ el, addToCart, products }) => {
 
     const [counter, setCounter] = useState(1)
 
@@ -21,9 +24,10 @@ const ProductPage = ({ el, addToCart }) => {
         }
     }
 
-    useEffect(() => {
-        console.log(counter)
-    }, [counter])
+    const filteredProducts = products?.filter(element => {
+        return element.category === el.category && element.id !== el.id
+    }).slice(0, 3)
+
 
     return ( 
         <div className="container">
@@ -47,6 +51,19 @@ const ProductPage = ({ el, addToCart }) => {
 
                 </div>
             </div>
+
+
+            <div className="similar-products">
+                <h3>Similar products</h3>
+                <ul className="similar-products-grid">
+                    {
+                    filteredProducts.map(el => (
+                        <Card key={uuidv4()} id={el.id} img={el.image} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} similar={true} />
+                        ))
+                    }
+                </ul>
+            </div>
+
         </div>
      )
 }

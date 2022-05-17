@@ -5,8 +5,10 @@ const Button = ({onClick, children, type }) => {
 
     return (
         <button type={type} onClick={onClick} className='main-btn'>
-            <img src={cartIconWhite} alt="cart icon" />
-            {children}
+            <span>
+                <img src={cartIconWhite} alt="cart icon" />
+                {children}
+            </span>
         </button>
     )
 }

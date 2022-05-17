@@ -5,6 +5,8 @@ import './_products.scss';
 import { css } from "@emotion/react";
 import GridLoader from "react-spinners/GridLoader";
 
+import heroImg from '../../Assets/hero-bg.png'
+
 const Products = ({ products, promiseInProgress, addToCart }) => {  
 
 
@@ -21,6 +23,9 @@ const Products = ({ products, promiseInProgress, addToCart }) => {
 
     return ( 
         <main id='main'>
+            <div className="hero-bg-container">
+                <img src={heroImg} alt="hero background" />
+            </div>
             <div className="container">
                 <h2 className='products-heading'>Products</h2>
 

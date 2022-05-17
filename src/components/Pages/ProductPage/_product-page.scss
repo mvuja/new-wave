@@ -66,4 +66,24 @@
         }
 
     }
+
+
+
+
+    .similar-products{
+        margin: 5rem 0 11rem;
+
+        h3{
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .similar-products-grid{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7rem;
+        }
+    }    
 }

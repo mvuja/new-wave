@@ -71,9 +71,11 @@ const Login = ({ onLogin, enteredName, setNameHandler }) => {
                     <p>Password must be at least 8 characters long</p>
                 </div>
                 <div>
-                <Button type="submit">
-                    Login
-                </Button>
+                <button type="submit">
+                    <span>
+                        Login
+                    </span>
+                </button>
                 </div>
             </form>
         </div>

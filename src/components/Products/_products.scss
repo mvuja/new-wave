@@ -1,8 +1,20 @@
 #main{
-    margin-top: 15rem;
-    margin-bottom: 10rem;
+    // margin-top: 15rem;
+    margin-bottom: 6rem;
+
+    .hero-bg-container{
+
+        img{
+            width: 100%;
+        }
+    }
 
     .container{
+        background: #fff;
+        margin-top: -25rem;
+        position: relative;
+        padding: 5rem;
+        border-radius: 2rem 2rem 0 0;
 
         #loader{
             height: 100%;
