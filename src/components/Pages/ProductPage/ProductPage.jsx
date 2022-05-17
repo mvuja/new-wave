@@ -5,6 +5,7 @@ import Button from '../../UI/Button';
 import Card from '../../Card/Card'
 
 import { v4 as uuidv4 } from 'uuid';
+import bgImg from '../../../Assets/single-product-bg.png';
 
 const ProductPage = ({ el, addToCart, products }) => {
 
@@ -29,42 +30,46 @@ const ProductPage = ({ el, addToCart, products }) => {
     }).slice(0, 3)
 
 
-    return ( 
-        <div className="container">
-            <div className="product-grid">
-                <div className="image-holder">
-                    <img src={el.image} alt={el.title} />
+    return (
+        <section id="single-product">
+            <img className='single-product-bg' src={bgImg} alt="graphic" />
+            <div className="container">
+                <div className="product-grid">
+                    <div className="image-holder">
+                        <img src={el.image} alt={el.title} />
+                    </div>
+                    <div className="product-content">
+                        <h2 className='product-title'>{el.title}</h2>
+                        <p className='product-category'>{el.category}</p>
+                        <p className='product-desc'>{el.description}</p>
+
+                        <form onSubmit={e => addToCart(el.id, el.title, el.price, el.image, el.description, e, counter)} className="add-to-cart">
+                            <div className="quantity-container">
+                                <button className='minus' onClick={quantityMinus}>-</button>
+                                <input className='product-quantity' type="text" value={counter} readOnly />
+                                <button className='plus' onClick={quantityPlus}>+</button>
+                            </div>
+                            <Button type='submit'>Add to cart</Button>
+                        </form>
+
+                    </div>
                 </div>
-                <div className="product-content">
-                    <h2 className='product-title'>{el.title}</h2>
-                    <p className='product-category'>{el.category}</p>
-                    <p className='product-desc'>{el.description}</p>
 
-                    <form onSubmit={e => addToCart(el.id, el.title, el.price, el.image, el.description, e, counter)} className="add-to-cart">
-                        <div className="quantity-container">
-                            <button className='minus' onClick={quantityMinus}>-</button>
-                            <input className='product-quantity' type="text" value={counter} readOnly />
-                            <button className='plus' onClick={quantityPlus}>+</button>
-                        </div>
-                        <Button type='submit'>Add to cart</Button>
-                    </form>
 
+                <div className="similar-products">
+                    <h3>Similar products</h3>
+                    <ul className="similar-products-grid">
+                        {
+                        filteredProducts.map(el => (
+                            <Card key={uuidv4()} id={el.id} img={el.image} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} similar={true} />
+                            ))
+                        }
+                    </ul>
                 </div>
+
             </div>
+        </section>
 
-
-            <div className="similar-products">
-                <h3>Similar products</h3>
-                <ul className="similar-products-grid">
-                    {
-                    filteredProducts.map(el => (
-                        <Card key={uuidv4()} id={el.id} img={el.image} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} similar={true} />
-                        ))
-                    }
-                </ul>
-            </div>
-
-        </div>
      )
 }
  
