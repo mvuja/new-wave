@@ -26,6 +26,10 @@
         right: 1rem;
         font-size: 2rem;
         background: transparent;
+        
+        & img{
+            max-width: 30px;
+        }
     }
 
     &.active{

@@ -23,8 +23,8 @@ nav{
                 top: -1rem;
                 right: -1rem;
                 background: var(--primary-color);
-                width: 2rem;
-                height: 2rem;
+                width: 2.5rem;
+                height: 2.5rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -32,6 +32,10 @@ nav{
                 font-size: 1.4rem;
                 font-weight: 700;
                 border-radius: 100px;
+
+                &.cart-counter-full{
+                    font-size: 1.2rem;
+                }
             }
         }
     }

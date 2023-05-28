@@ -1,6 +1,7 @@
 import './_cart.scss'
 import Button from '../UI/Button';
 import trash from '../../Assets/trash.svg'
+import close from '../../Assets/close.svg'
 
 const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, closeCartHadnler }) => {
 
@@ -19,7 +20,9 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, cl
         <aside id="cart" className={`${cartIsOpen && 'open'}`}>
             <div className="cart-header">
                 <h2>Cart</h2>
-                <button className='close-cart' onClick={closeCartHadnler}>X</button>
+                <button className='close-cart' onClick={closeCartHadnler}>
+                    <img src={close} alt="close cart" />
+                </button>
             </div>
             <div className="cart-container">
                 {
@@ -36,7 +39,18 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, cl
                             <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>
                                 <img src={trash} alt="Trash item" />
                             </button>
-                            <p className="counter">{el.counter}</p>
+                            {/* <p className="counter">{el.counter}</p> */}
+                            {
+                                el.counter !== 0 && el.counter <= 99
+                                ?
+                                <span className='counter'>{el.counter}</span>
+                                :
+                                el.counter > 99
+                                ?
+                                <span className='counter counter-full'>99+</span>
+                                :
+                                <span></span>
+                            }
                         </article>
                     ))
                     :

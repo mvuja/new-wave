@@ -1,4 +1,5 @@
 import './_toast.scss'
+import close from '../../Assets/close.svg'
 
 const Toast = ({ toastIsOpen, closeToastHandler, toastCounter, enteredName }) => {
     return ( 
@@ -10,7 +11,9 @@ const Toast = ({ toastIsOpen, closeToastHandler, toastCounter, enteredName }) =>
                 :
                     <p className='normal'>Thank you {enteredName}, your {toastCounter} items have been successfully bought.</p>
             }
-            <button className='close-toast' onClick={closeToastHandler}>X</button>
+            <button className='close-toast' onClick={closeToastHandler}>
+                <img src={close} alt="" />
+            </button>
         </div>
      );
 }

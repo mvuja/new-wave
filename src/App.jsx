@@ -27,6 +27,9 @@ function App() {
   const [cartIsOpen, setCartIsOpen] = useState(false)
   const [toastIsOpen, setToastIsOpen] = useState(false)
 
+  // USER'S ENTERED NAME FOR TOAST NOTIFICATION
+  const [enteredName, setEnteredName] = useState('')
+
 
   // API FETCHING
   useEffect(() => {
@@ -139,23 +142,28 @@ function App() {
   
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn')
+    const storedUserName = localStorage.getItem('name')
 
     if(storedUserLoggedInInformation === '1'){
       setIsLoggedIn(true)
+    }
+    if(storedUserName){
+      setEnteredName(storedUserName)
     }
   }, [])
 
   const loginHandler = (email, password) => {
     // We should of course check email and password
-    // But it's just a dummy/ demo anyways
+    // But it's just a demo anyways
     localStorage.setItem('isLoggedIn', '1')
+    localStorage.setItem('name', enteredName)
     setIsLoggedIn(true)
   }
 
-  const logoutHandler = () => {
-    setIsLoggedIn(false)
-    localStorage.removeItem('isLoggedIn')
-  }
+  // const logoutHandler = () => {
+  //   setIsLoggedIn(false)
+  //   localStorage.removeItem('isLoggedIn')
+  // }
 
 
 
@@ -224,8 +232,7 @@ function App() {
 
 
 
-  // USER'S ENTERED NAME FOR TOAST NOTIFICATION
-  const [enteredName, setEnteredName] = useState('')
+
 
   const setNameHandler = name => {
     setEnteredName(name)
@@ -243,15 +250,7 @@ function App() {
             <Route exact path="/">
               <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} addToCart={addToCart} />
             </Route>
-            {/* <Route exact path='/product'>
-                <NotMatch/>
-            </Route> */}
             {
-              // (promiseInProgress === true) ?
-              //   <Route path='/product'>
-              //     <ProductPage/>
-              //   </Route>
-              // :
               products?.map(el => (
                   <Route key={el.id} path={`/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
                     <ProductPage el={el} addToCart={addToCart} products={products} />
@@ -263,12 +262,6 @@ function App() {
           <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
           <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} enteredName={enteredName} />
           <Footer />
-
-
-          {/* <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} /> */}
-          {/* <Discount /> */}
-          {/* <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} /> */}
-          {/* <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} /> */}
         </>
         :
         <Login onLogin={loginHandler} setNameHandler={setNameHandler} enteredName={enteredName} />
