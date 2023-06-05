@@ -42,6 +42,7 @@ const ProductPage = ({ el, addToCart, products }) => {
                         <h2 className='product-title'>{el.title}</h2>
                         <p className='product-category'>{el.category}</p>
                         <p className='product-desc'>{el.description}</p>
+                        <p className='product-price'>${el.price}</p>
 
                         <form onSubmit={e => addToCart(el.id, el.title, el.price, el.image, el.description, e, counter)} className="add-to-cart">
                             <div className="quantity-container">
