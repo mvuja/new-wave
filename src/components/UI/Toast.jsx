@@ -12,7 +12,7 @@ const Toast = ({ toastIsOpen, closeToastHandler, toastCounter, enteredName }) =>
                     <p className='normal'>Thank you {enteredName}, your {toastCounter} items have been successfully bought.</p>
             }
             <button className='close-toast' onClick={closeToastHandler}>
-                <img src={close} alt="close" />
+                <img src={close} alt="" />
             </button>
         </div>
      );

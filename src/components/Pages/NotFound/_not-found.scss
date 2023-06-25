@@ -1,0 +1,50 @@
+#not-found{
+    padding: 20rem 0 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 600px;
+    align-items: center;
+    margin-bottom: 10rem;
+    overflow: hidden;
+
+    & .content{
+        z-index: 9;
+    }
+
+    & .fourofour{
+        font-size: 2.6rem;
+        font-weight: 700;
+    }
+
+    & h1{
+        @media only screen and (max-width: 500px) {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    & .txt{
+        font-size: 2.4rem;
+        margin-top: 1rem;
+        line-height: 1.3;
+
+        & a{
+            color: #c779ee;
+            transition: color .3s ease;
+
+            &:hover{
+                color: #E6449B;
+            }
+        }
+    }
+
+   & .single-product-bg {
+        position: absolute;
+        top: 8rem;
+        left: 0;
+        z-index: 1;
+        transform: scale(1.2);
+        transform-origin: top left;
+    }
+}

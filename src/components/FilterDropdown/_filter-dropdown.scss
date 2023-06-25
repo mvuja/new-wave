@@ -1,0 +1,28 @@
+.dropdown{
+    position: relative;
+    
+    & svg{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: .5rem;
+        pointer-events: none;
+        fill: var(--txt-color-secondary);
+    }
+    
+    & select{
+        border-radius: 100px;
+        width: 100%;
+        border: 1px solid var(--txt-color-secondary);
+        padding: .7rem 3.5rem .7rem 1rem;
+        background-color: #fff;
+        font-size: 20px;
+        color: var(--txt-color-secondary);
+        -moz-appearance: none;
+        -webkit-appearance: none;
+
+        &::-ms-expand{
+            display: none;
+        }
+    }
+}

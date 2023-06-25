@@ -1,4 +1,4 @@
-# NEW WAVE
+# SHOP
 ## Available Scripts
 
 In the project directory, you can run:

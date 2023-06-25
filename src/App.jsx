@@ -7,6 +7,7 @@ import Products from "./components/Products/Products"
 import Cart from "./components/Cart/Cart"
 import Footer from "./components/Footer/Footer"
 import Toast from "./components/UI/Toast"
+import NotFound from "./components/Pages/NotFound/NotFound"
 // import Discount from "./components/Discount/Discount"
 
 import Login from "./components/Pages/Login/Login"
@@ -14,9 +15,10 @@ import ProductPage from "./components/Pages/ProductPage/ProductPage"
 
 function App() {
 
-  const url = `https://fakestoreapi.com/products`
+  // const url = `https://fakestoreapi.com/products`
+  const url = `https://dummyjson.com/products`
 
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState([])
   
   const [cart, setCart] = useState(getInitialProducts())
   const [cartCounter, setCartCounter] = useState(getInitialCounter())
@@ -37,7 +39,7 @@ function App() {
       fetch(url).then((res) => {
         return res.json()
       }).then((data) => {
-        setProducts(data)
+        setProducts(data.products)
       })
     )
   }, [url])
@@ -153,8 +155,7 @@ function App() {
   }, [])
 
   const loginHandler = (email, password) => {
-    // We should of course check email and password
-    // But it's just a demo anyways
+    // Here, We should check email and password
     localStorage.setItem('isLoggedIn', '1')
     localStorage.setItem('name', enteredName)
     setIsLoggedIn(true)
@@ -183,7 +184,7 @@ function App() {
         id: id,
         title: title,
         price: price,
-        image: img,
+        thumbnail: img,
         desc: desc,
         counter: quantity
       }
@@ -192,7 +193,7 @@ function App() {
         id: id,
         title: title,
         price: price,
-        image: img,
+        thumbnail: img,
         desc: desc,
         counter: 1
       }
@@ -230,10 +231,6 @@ function App() {
     setCartHandler(updatedItems)
   }
 
-
-
-
-
   const setNameHandler = name => {
     setEnteredName(name)
   }
@@ -250,14 +247,11 @@ function App() {
             <Route exact path="/">
               <Products products={products} cart={cart} setCartHandler={setCartHandler} promiseInProgress={promiseInProgress} addToCart={addToCart} />
             </Route>
-            {
-              products?.map(el => (
-                  <Route key={el.id} path={`/${el.title.trim().replace(/\s+/g, '-').replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '').toLowerCase()}`}>
-                    <ProductPage el={el} addToCart={addToCart} products={products} />
-                  </Route>
-                ))
-            }
-            {/* <Route path="*" component={NotMatch}/> */}
+            <Route path="/product/:productID">
+              <ProductPage products={products} addToCart={addToCart} />
+            </Route>
+
+            <Route path="*" component={NotFound}/>
           </Switch>
           <Cart cart={cart} cartIsOpen={cartIsOpen} setCartHandler={setCartHandler} cartPrice={cartPrice} checkoutHandler={checkoutHandler} closeCartHadnler={closeCartHadnler} />
           <Toast toastIsOpen={toastIsOpen} closeToastHandler={closeToastHandler} toastCounter={toastCounter} enteredName={enteredName} />

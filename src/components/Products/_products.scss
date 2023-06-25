@@ -4,7 +4,7 @@
 
     .hero-bg-container{
 
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 1200px) {
             padding-top: 5rem;
         }
         
@@ -20,7 +20,7 @@
         padding: 5rem;
         border-radius: 2rem 2rem 0 0;
         
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 1200px) {
             margin-top: -2rem;
         }
 
@@ -33,16 +33,39 @@
         }
 
         .products-heading{
-            font-size: 3rem;
             margin-bottom: 4rem;
-            padding-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+
+            @media only screen and (max-width: 800px) {
+                flex-direction: column;
+                gap: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            h2{
+                font-size: 3rem;
+                color: var(--txt-color-primary);
+
+            }
         }
 
         .product-list{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 33rem), 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 7rem;
+
+            @media only screen and (max-width: 1000px) {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+
+            @media only screen and (max-width: 600px) {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
     }
 }

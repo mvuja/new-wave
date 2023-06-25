@@ -53,8 +53,9 @@
             line-height: 1.3;
             display: flex;
             justify-content: space-between;
-
+            
             span{
+                color: var(--txt-color-primary);
                 font-weight: 700;
             }
         }
@@ -161,6 +162,7 @@
                 font-size: 2rem;
                 font-weight: 700;
                 line-height: 1;
+                color: var(--txt-color-primary);
             }
         }
     }

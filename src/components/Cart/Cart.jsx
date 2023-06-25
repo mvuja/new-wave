@@ -31,15 +31,14 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, cl
                         <article key={el.id}>
                             <div className="content">
 
-                                <img className='item-img' src={el.image} alt={el.title} />
-                                <p className='item-title'>{el.title}</p>
+                                <img className='item-img' src={el.thumbnail} alt={el.title} />
+                                <h3 className='item-title'>{el.title}</h3>
                                 <p className='item-desc'>{el.desc}</p>
-                                <p className='item-price'>${el.price}</p>
+                                <p className='item-price'>${el.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                             </div>
                             <button onClick={() => {setNewCartHadnler(el.id)}} className='trash'>
                                 <img src={trash} alt="Trash item" />
                             </button>
-                            {/* <p className="counter">{el.counter}</p> */}
                             {
                                 el.counter !== 0 && el.counter <= 99
                                 ?
@@ -54,14 +53,14 @@ const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, cl
                         </article>
                     ))
                     :
-                    <p className='empty-shop'>Currently there are no products. Please choose products from the list</p>
+                    <p className='empty-shop'>Currently, there are no products in the cart. Please choose some of the products from the shop!</p>
                 }
             </div>
 
             {
                 cart.length > 0 &&
                 <div className="cart-footer">
-                    <p className='cart-total'>TOTAL: <span>${cartPrice}</span></p>
+                    <p className='cart-total'>TOTAL: <span>${cartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></p>
                     <Button onClick={checkoutHandler}>Purchase</Button>
                 </div>
             }
