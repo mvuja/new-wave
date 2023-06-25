@@ -116,6 +116,7 @@ function App() {
     setCartIsOpen(set)
   }
 
+  
   const checkoutHandler = () => {
     setToastCounter(cartCounter)
     setCartIsOpen(false)

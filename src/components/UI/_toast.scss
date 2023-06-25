@@ -1,23 +1,42 @@
 #toast{
     position: fixed;
-    bottom: 0;
-    right: -42rem;
+    bottom: 1.5rem;
+    right: -47rem;
     z-index: 999;
     background: #fff;
-    box-shadow: 0 0 1.5rem rgba($color: #000000, $alpha: 0.25);
-    padding: 1rem 2rem;
-    width: 36rem;
+    box-shadow: 0 .3rem 1.5rem rgba($color: #000000, $alpha: 0.2);
+    padding: .3rem;
+    background: linear-gradient(to right, #C12877, #EF646F, #FDC092, #58D6E6, #8B50E7);
+    width: 43rem;
     max-width: 100%;
-    border-radius: .6rem 0 0 0;
+    border-radius: 1.3rem;
     transition: right .3s ease;
+    transition: all .3s ease;
+
+    @media only screen and (max-width: 600px) {
+        width: auto;
+        transition: none;
+
+        &.active{
+            left: 1.5rem;
+        }
+    }
+
+    .border-wrap{
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: 1rem 2rem;
+    }
 
     .bold{
-        font-size: 2rem;
+        font-size: 2.4rem;
         font-weight: 700;
+        color: var(--txt-color-primary);
     }
 
     .normal{
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
     }
 
     .close-toast{
@@ -33,6 +52,6 @@
     }
 
     &.active{
-        right: 0;
+        right: 1.5rem;
     }
 }
