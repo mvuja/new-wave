@@ -44,6 +44,4 @@ The build is minified and the filenames include the hashes.
 
 - React.js
 - SASS
-- React Router
-- Chart.js
 - API Integrations
