@@ -1,8 +1,43 @@
 .card{
     box-shadow: 0 1rem 3.5rem #c2bcca55;
     border-radius: 2rem;
-    overflow: hidden;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow .3s ease;
+    
+    &:hover{
+        box-shadow: .5rem 1.2rem 4.5rem #c2bccab6;
+    }
+
+    .counter{
+        position: absolute;
+        background: var(--primary-color);
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 700;
+        border-radius: 100px;
+        top: -1rem;
+        right: -1rem;
+        
+        &.counter-full{
+            font-size: 1.2rem;
+        }
+    }
+
+    .trash{
+        position: absolute;
+        background: transparent;
+        bottom: .7rem;
+        right: .7rem;
+        width: 2rem;
+    }
 
     &--image-link{
         display: block;
@@ -27,7 +62,7 @@
         justify-content: space-between;
         align-items: center;
         gap: 3rem;
-        margin-top: 1.5rem;
+        margin-top: auto;
 
         @media only screen and (max-width: 450px) {
             flex-direction: column;
@@ -46,6 +81,9 @@
         font-weight: 600;
         line-height: 1.2;
     }
+    &.in-cart .card--title{
+        font-size: 2rem;
+    }
 
     &--price{
         font-size: 2.8rem;
@@ -54,11 +92,15 @@
         white-space: nowrap;
         line-height: 1;
     }
+    &.in-cart .card--price{
+        font-size: 1.8rem;
+    }
 
     &--category{
         font-size: 1.2rem;
         color: var(--txt-color-secondary);
         font-weight: 600;
+        margin-bottom: 1rem;
     }
 
     &--desc{

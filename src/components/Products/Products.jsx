@@ -9,7 +9,7 @@ import GridLoader from "react-spinners/GridLoader";
 import heroImg from '../../Assets/hero-bg.png'
 import { useEffect } from 'react';
 
-const Products = ({ products, promiseInProgress, addToCart }) => {  
+const Products = ({ products, promiseInProgress, addToCart, setCartHandler, cart }) => {  
 
     const [filteredProducts, setFilteredProducts] = useState([])
 
@@ -84,7 +84,7 @@ const Products = ({ products, promiseInProgress, addToCart }) => {
                     <ul className='product-list'>
                         {
                             search(filteredProducts)?.map(el => (
-                                <Card key={el.id} id={el.id} img={el.thumbnail} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} />
+                                <Card key={el.id} id={el.id} img={el.thumbnail} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} isCart={false} setCartHandler={setCartHandler} cart={cart} counter={el.counter} />
                             ))
                         }
                     </ul>

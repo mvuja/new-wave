@@ -15,7 +15,6 @@ import ProductPage from "./components/Pages/ProductPage/ProductPage"
 
 function App() {
 
-  // const url = `https://fakestoreapi.com/products`
   const url = `https://dummyjson.com/products`
 
   const [products, setProducts] = useState([])

@@ -36,9 +36,18 @@
                 box-shadow: 0 1rem 3rem rgba($color: #000000, $alpha: .15);
                 border-radius: 2rem;
                 overflow: hidden;
-                padding: 3rem;
+                padding: 3rem 3rem 1rem;
                 max-height: 60rem;
                 background-color: #fff;
+
+                .swiper{
+                    padding-bottom: 5rem;
+                    height: 100%;
+                    
+                    .swiper-pagination-bullet-active {
+                        background: #E53E9A;
+                    }
+                }
 
                 @media only screen and (max-width: 768px) {
                     padding: 3rem;
