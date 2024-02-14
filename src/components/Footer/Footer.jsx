@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
 import './_footer.scss'
 
-const Footer = props => {
+const Footer = () => {
     return ( 
         <footer>
             <div className="container">

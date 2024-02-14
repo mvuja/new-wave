@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import './_navbar.scss'
 import cartIcon from '../../Assets/cart-icon.svg'
 import logo from '../../Assets/logo.svg'

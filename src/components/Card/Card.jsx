@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './_card.scss';
-import Button from '../UI/Button';
+import './_card.scss'
+import Button from '../UI/Button'
 
 import trash from '../../Assets/trash.svg'
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import thousandSeparator from '../../thousandSeparator'
 

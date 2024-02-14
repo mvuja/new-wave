@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import './_login.scss'
-import Button from '../../UI/Button';
 
-import bgImg from '../../../Assets/login-bg.png';
+import bgImg from '../../../Assets/login-bg.png'
 
 
 const Login = ({ onLogin, enteredName, setNameHandler }) => {

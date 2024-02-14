@@ -72,16 +72,7 @@ const ProductPage = ({ products, addToCart }) => {
 
     const goodIDs = products.map(el => el.id)
 
-
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-    };
-
     return (
-
         <>
         {
 
