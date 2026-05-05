@@ -1,43 +1,59 @@
 import './_cart.scss'
 import Button from '../UI/Button'
 import close from '../../Assets/close.svg'
-
-import thousandSeparator from '../../thousandSeparator'
-
+import thousandSeparator from '../../utils/thousandSeparator'
 import Card from '../Card/Card'
+import useCartStore from '../../store/useCartStore'
 
-const Cart = ({ cart, cartIsOpen, setCartHandler, cartPrice, checkoutHandler, closeCartHadnler }) => {
+const Cart = ({ cartIsOpen, closeCartHandler, onCheckout }) => {
+  const { cartItems } = useCartStore()
 
+  const cartTotal = Math.round(
+    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) * 100
+  ) / 100
 
-    return ( 
-        <aside id="cart" className={`${cartIsOpen && 'open'}`}>
-            <div className="cart-header">
-                <h2>Cart</h2>
-                <button className='close-cart' onClick={closeCartHadnler}>
-                    <img src={close} alt="close cart" />
-                </button>
-            </div>
-            <ul className="cart-container">
-                {
-                    cart.length ?
-                    cart?.map( el => (
-                        <Card key={el.id} id={el.id} img={el.thumbnail} title={el.title} price={el.price} category={el.category} desc={el.description} isCart={true} setCartHandler={setCartHandler} cart={cart} counter={el.counter} />
-                    ))
-                    :
-                    <p className='empty-shop'>Currently, there are no products in the cart. Please choose some of the products from the shop!</p>
-                }
-            </ul>
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
-            {
-                cart.length > 0 &&
-                <div className="cart-footer">
-                    <p className='cart-total'>TOTAL: <span>${thousandSeparator(cartPrice)}</span></p>
-                    <Button onClick={checkoutHandler}>Purchase</Button>
-                </div>
-            }
+  return (
+    <aside id="cart" className={cartIsOpen ? 'open' : undefined}>
+      <div className="cart-header">
+        <h2>Cart</h2>
+        <button className="close-cart" onClick={closeCartHandler}>
+          <img src={close} alt="close cart" />
+        </button>
+      </div>
 
-        </aside>
-     )
+      <ul className="cart-container">
+        {cartItems.length ? (
+          cartItems.map((el) => (
+            <Card
+              key={el.id}
+              id={el.id}
+              img={el.thumbnail}
+              title={el.title}
+              price={el.price}
+              category={el.category}
+              desc={el.description}
+              isCart={true}
+            />
+          ))
+        ) : (
+          <p className="empty-shop">
+            Your cart is empty. Add some products from the shop!
+          </p>
+        )}
+      </ul>
+
+      {cartItems.length > 0 && (
+        <div className="cart-footer">
+          <p className="cart-total">
+            TOTAL: <span>${thousandSeparator(cartTotal)}</span>
+          </p>
+          <Button onClick={() => onCheckout(cartCount)}>Purchase</Button>
+        </div>
+      )}
+    </aside>
+  )
 }
- 
-export default Cart;
+
+export default Cart

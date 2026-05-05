@@ -1,97 +1,123 @@
-import React, {useState} from 'react'
+import { useEffect, useRef } from 'react'
+import useProductStore from '../../store/useProductStore'
 import Card from '../Card/Card'
-import FilterDropdown from '../FilterDropdown/FilterDropdown';
-import Search from '../Search/Search';
-import './_products.scss';
-import { css } from "@emotion/react";
-import GridLoader from "react-spinners/GridLoader";
+import SkeletonCard from '../UI/SkeletonCard'
+import Pagination from '../Pagination/Pagination'
+import Search from '../Search/Search'
+import FilterDropdown from '../FilterDropdown/FilterDropdown'
+import './_products.scss'
 
 import heroImg from '../../Assets/hero-bg.png'
-import { useEffect } from 'react';
 
-const Products = ({ products, promiseInProgress, addToCart, setCartHandler, cart }) => {  
+// Sort options available to the user
+const SORT_OPTIONS = [
+  { label: 'Title A–Z',       sortBy: 'title', order: 'asc' },
+  { label: 'Title Z–A',       sortBy: 'title', order: 'desc' },
+  { label: 'Price Low–High',  sortBy: 'price', order: 'asc' },
+  { label: 'Price High–Low',  sortBy: 'price', order: 'desc' },
+  { label: 'Rating',          sortBy: 'rating', order: 'desc' },
+]
 
-    const [filteredProducts, setFilteredProducts] = useState([])
+const Products = () => {
+  const {
+    products, total, page, limit, loading, error,
+    sortBy, order,
+    fetchProducts,
+    nextPage, prevPage,
+    setSort,
+  } = useProductStore()
 
-    useEffect(() => {
-        if(products){
-            setFilteredProducts(products)
-        }
-    }, [products])
-
-
-
-    // FILTER BY CATEGORY
-    const filterProductsHandler = e => {
-
-        if(e.target.value === 'all'){
-            setFilteredProducts(products)
-        }else{
-            setFilteredProducts(
-            products.filter(el => {
-                return el.category === e.target.value
-            })
-            )
-        }
+  const initialized = useRef(false)
+  useEffect(() => {
+    if (!initialized.current) {
+      initialized.current = true
+      fetchProducts()
     }
+  }, [fetchProducts])
+
+  const currentSortValue = `${sortBy}_${order}`
+
+  const handleSortChange = (e) => {
+    const opt = SORT_OPTIONS.find((o) => `${o.sortBy}_${o.order}` === e.target.value)
+    if (opt) setSort(opt.sortBy, opt.order)
+  }
 
 
-    // FILTER BY SEARCH
-    const [inputSearch, setInputSearch] = useState('')
-    const [searchParam] = useState(["title", "description"])
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    function search(items) {
-        return items.filter((item) => {
-            return searchParam.some((newItem) => {
-                return (
-                    item[newItem]
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(inputSearch.toLowerCase()) > -1
-                )
-            })
-        })
-    }
+  const handleNext = () => { nextPage(); scrollToTop() }
+  const handlePrev = () => { prevPage(); scrollToTop() }
 
+  return (
+    <main id="main">
+      <div className="hero-bg-container">
+        <img src={heroImg} alt="hero background" />
+      </div>
 
-    // LOADER
-    const override = css`
-        display: block;
-        margin: 0 auto;
-        border-color: red;
-    `;
+      <div className="container">
+        <div className="products-heading">
+          <h2>Products</h2>
+          <Search />
+          <FilterDropdown />
+          <div className="dropdown">
+            <select value={currentSortValue} onChange={handleSortChange}>
+              {SORT_OPTIONS.map((o) => (
+                <option key={`${o.sortBy}_${o.order}`} value={`${o.sortBy}_${o.order}`}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+            </svg>
+          </div>
+        </div>
 
-    const color = '#171719'
+        {error && (
+          <div className="state-message error-state">
+            <p>⚠️ {error}</p>
+            <button onClick={fetchProducts}>Retry</button>
+          </div>
+        )}
 
-    return ( 
-        <main id='main'>
-            <div className="hero-bg-container">
-                <img src={heroImg} alt="hero background" />
-            </div>
-            <div className="container">
-                <div className="products-heading">
-                    <h2>Products</h2>
-                    <Search inputSearch={inputSearch} setInputSearch={setInputSearch} />
-                    <FilterDropdown filterProductsHandler={filterProductsHandler} products={products} />
-                </div>
+        {loading ? (
+          <ul className="product-list">
+            {Array.from({ length: limit }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </ul>
+        ) : !error && products.length === 0 ? (
+          <div className="state-message empty-state">
+            <p>No products found. Try a different search or category.</p>
+          </div>
+        ) : (
+          <ul className="product-list">
+            {products.map((el) => (
+              <Card
+                key={el.id}
+                id={el.id}
+                img={el.thumbnail}
+                title={el.title}
+                price={el.price}
+                category={el.category}
+                desc={el.description}
+                isCart={false}
+              />
+            ))}
+          </ul>
+        )}
 
-                {(promiseInProgress === true) ?
-
-                    <div id="loader">
-                        <GridLoader color={color} css={override} size={20} />
-                    </div>
-                :
-                    <ul className='product-list'>
-                        {
-                            search(filteredProducts)?.map(el => (
-                                <Card key={el.id} id={el.id} img={el.thumbnail} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} isCart={false} setCartHandler={setCartHandler} cart={cart} counter={el.counter} />
-                            ))
-                        }
-                    </ul>
-                }
-            </div>
-        </main>
-     )
+        <Pagination
+          page={page}
+          limit={limit}
+          total={total}
+          onNext={handleNext}
+          onPrev={handlePrev}
+        />
+      </div>
+    </main>
+  )
 }
- 
+
 export default Products

@@ -1,158 +1,156 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './_product-page.scss'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 
 import NotFound from '../NotFound/NotFound'
-
 import Button from '../../UI/Button'
 import Card from '../../Card/Card'
-
-import thousandSeparator from '../../../thousandSeparator'
-
+import thousandSeparator from '../../../utils/thousandSeparator'
 import bgImg from '../../../Assets/single-product-bg.png'
 
-import { usePromiseTracker, trackPromise } from "react-promise-tracker"
-import GridLoader from "react-spinners/GridLoader";
-import { css } from "@emotion/react";
+import { Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
+import { getProduct, getProductsByCategory } from '../../../api/productsApi'
+import useCartStore from '../../../store/useCartStore'
+import { idFromSlug } from '../../../utils/slugify'
 
+const ProductPage = () => {
+  const { productSlug } = useParams()
+  const productID = idFromSlug(productSlug)
+  const { addToCart } = useCartStore()
 
-const ProductPage = ({ products, addToCart }) => {
+  const [product, setProduct] = useState(null)
+  const [similar, setSimilar] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
+  const [counter, setCounter] = useState(1)
 
-    const params = useParams()
-    const { productID } = params
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setNotFound(false)
+    setProduct(null)
+    setSimilar([])
+    setCounter(1)
 
-    const [singleProduct, setSingleProduct] = useState({})
+    getProduct(productID)
+      .then((data) => {
+        if (cancelled) return
+        if (!data?.id) { setNotFound(true); setLoading(false); return }
+        setProduct(data)
+        setLoading(false)
+        // Fetch similar products by category (exclude current)
+        return getProductsByCategory(data.category, { limit: 4, skip: 0 })
+          .then((res) => {
+            if (cancelled) return
+            setSimilar(res.products.filter((p) => p.id !== data.id).slice(0, 3))
+          })
+      })
+      .catch(() => {
+        if (!cancelled) { setNotFound(true); setLoading(false) }
+      })
 
-    useEffect(() => {
-        trackPromise(
-            fetch(`https://dummyjson.com/products/${productID}`).then((res) => {
-                return res.json()
-            }).then((data) => {
-                setSingleProduct(data)
-            })
-        )
-    }, [productID])
-    const { promiseInProgress } = usePromiseTracker()
-    // LOADER
-    const override = css`
-        display: block;
-        margin: 0 auto;
-        border-color: red;
-    `;
+    return () => { cancelled = true }
+  }, [productID])
 
-    const color = '#171719'
+  const quantityPlus = (e) => {
+    e.preventDefault()
+    if (counter < 10) setCounter((c) => c + 1)
+  }
 
+  const quantityMinus = (e) => {
+    e.preventDefault()
+    if (counter > 1) setCounter((c) => c - 1)
+  }
 
-    // FOR OTHER STUFF
+  const handleAddToCart = (e) => {
+    e.preventDefault()
+    addToCart(
+      { id: product.id, thumbnail: product.thumbnail, title: product.title, price: product.price, category: product.category, description: product.description },
+      counter
+    )
+  }
 
-    const [counter, setCounter] = useState(1)
+  if (notFound) return <NotFound />
 
-    const quantityPlus = e => {
-        e.preventDefault()
-        if(counter > 0 && counter < 10){
-            setCounter(counter + 1)
-        }
-    }
+  return (
+    <section id="single-product">
+      <img className="single-product-bg" src={bgImg} alt="graphic" />
 
-    const quantityMinus = e => {
-        e.preventDefault()
-        if(counter > 1 && counter < 11){
-            setCounter(counter - 1)
-        }
-    }
+      {loading ? (
+        <div id="loader">
+          <div className="product-page-skeleton">
+            <div className="skeleton skeleton-product-img" />
+            <div className="product-page-skeleton-content">
+              <div className="skeleton skeleton-line lg" />
+              <div className="skeleton skeleton-line sm" />
+              <div className="skeleton skeleton-line md" />
+              <div className="skeleton skeleton-line sm" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="container">
+          <div className="product-grid">
+            <div className="image-holder">
+              <Swiper
+                modules={[Pagination]}
+                pagination={{ clickable: true }}
+                loop={true}
+                spaceBetween={50}
+                slidesPerView={1}
+              >
+                {product.images?.map((img, i) => (
+                  <SwiperSlide key={i}>
+                    <img src={img} alt="" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
 
-    const filteredProducts = products?.filter(element => {
-        return element.category === singleProduct.category && element.id !== singleProduct.id
-    }).slice(0, 3)
+            <div className="product-content">
+              <h2 className="product-title">{product.title}</h2>
+              <p className="product-category">{product.category}</p>
+              <p className="product-desc">{product.description}</p>
+              <p className="product-price">${thousandSeparator(product.price)}</p>
 
-    const goodIDs = products.map(el => el.id)
-
-    return (
-        <>
-        {
-
-            (goodIDs.includes(+productID)) ?
-        
-            <section id="single-product">
-                <img className='single-product-bg' src={bgImg} alt="graphic" />
-                {
-                (promiseInProgress !== true && singleProduct) ?
-                <>
-                    <div className="container">
-                        <div className="product-grid">
-                            <div className="image-holder">
-                                <Swiper
-                                    modules={[Pagination]}
-                                    pagination={{ clickable: true }}
-                                    loop={true}
-                                    spaceBetween={50}
-                                    slidesPerView={1}
-                                    // onSlideChange={() => console.log('slide change')}
-                                    // onSwiper={(swiper) => console.log(swiper)}
-                                    >
-                                    {
-                                        singleProduct.images?.map((img, id) => (
-                                            <SwiperSlide key={id}>
-                                                <img src={img} alt="" />
-                                            </SwiperSlide>
-                                        ))
-                                    }
-                                </Swiper>
-                                {/* <img src={singleProduct.thumbnail} alt={singleProduct.title} /> */}
-                            </div>
-                            <div className="product-content">
-                                <h2 className='product-title'>{singleProduct.title}</h2>
-                                <p className='product-category'>{singleProduct.category}</p>
-                                <p className='product-desc'>{singleProduct.description}</p>
-                                <p className='product-price'>${thousandSeparator(singleProduct?.price)}</p>
-
-                                <form onSubmit={e => addToCart(singleProduct.id, singleProduct.title, singleProduct.price, singleProduct.thumbnail, singleProduct.description, e, counter)} className="add-to-cart">
-                                    <div className="quantity-container">
-                                        <button className='minus' onClick={quantityMinus}>-</button>
-                                        <input className='product-quantity' type="text" value={counter} readOnly />
-                                        <button className='plus' onClick={quantityPlus}>+</button>
-                                    </div>
-                                    <Button type='submit'>Add to cart</Button>
-                                </form>
-
-                            </div>
-                        </div>
-
-
-                        <div className="similar-products">
-                            <h3>Similar products</h3>
-                            <ul className="similar-products-grid">
-                                {
-                                filteredProducts.map(el => (
-                                    <Card key={el.id} id={el.id} img={el.thumbnail} title={el.title} price={el.price} category={el.category} desc={el.description} addToCart={addToCart} similar={true} />
-                                    ))
-                                }
-                            </ul>
-                        </div>
-
-                    </div>
-                </>
-                :
-                <div id="loader">
-                    <GridLoader color={color} css={override} size={20} />
+              <form onSubmit={handleAddToCart} className="add-to-cart">
+                <div className="quantity-container">
+                  <button className="minus" onClick={quantityMinus}>-</button>
+                  <input className="product-quantity" type="text" value={counter} readOnly />
+                  <button className="plus" onClick={quantityPlus}>+</button>
                 </div>
-                }
-            </section>
+                <Button type="submit">Add to cart</Button>
+              </form>
+            </div>
+          </div>
 
-            :
-
-            <NotFound />
-        }
-        </>
-
-
-
-     )
+          {similar.length > 0 && (
+            <div className="similar-products">
+              <h3>Similar products</h3>
+              <ul className="similar-products-grid">
+                {similar.map((el) => (
+                  <Card
+                    key={el.id}
+                    id={el.id}
+                    img={el.thumbnail}
+                    title={el.title}
+                    price={el.price}
+                    category={el.category}
+                    desc={el.description}
+                    isCart={false}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  )
 }
- 
+
 export default ProductPage

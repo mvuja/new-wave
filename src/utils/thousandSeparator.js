@@ -3,3 +3,4 @@ function thousandSeparator(x) {
 }
 
 export default thousandSeparator
+

@@ -1,0 +1,26 @@
+@keyframes shimmer {
+  0%   { background-position: -80rem 0; }
+  100% { background-position: 80rem 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #efefef 25%, #e0e0e0 50%, #efefef 75%);
+  background-size: 160rem 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 0.6rem;
+}
+
+.skeleton-card {
+  box-shadow: 0 1rem 3.5rem #c2bcca33;
+  border-radius: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  .skeleton-img    { height: 20rem; border-radius: 1rem; }
+  .skeleton-title  { height: 2.2rem; width: 75%; }
+  .skeleton-subtitle { height: 1.4rem; width: 45%; }
+  .skeleton-btn    { height: 4.2rem; margin-top: 1rem; border-radius: 0.35rem; }
+}
+
