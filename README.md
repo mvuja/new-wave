@@ -1,47 +1,109 @@
 # New Wave
 
-## Available Scripts
+A feature-rich, frontend-only e-commerce application built with React and Sass. Powered by the [DummyJSON API](https://dummyjson.com) for products and authentication. All state is managed with Zustand and persisted via localStorage.
 
-In the project directory, you can run:
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js v16+
+- npm v8+
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/new-wave.git
+cd new-wave
+npm install
+```
+
+### Running the app
 
 ```bash
 npm start
 ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The page will reload when you make changes.
+### Production build
 
 ```bash
 npm run build
 ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Outputs an optimized build to the `/build` folder.
 
-The build is minified and the filenames include the hashes.
+---
 
-**New Wave** is a feature-rich online shopping platform developed using React.js and Sass. This application is designed to provide users with a seamless and engaging shopping experience, offering a variety of functionalities and features to explore.
+## Authentication
 
-### Features
+Authentication is handled entirely on the frontend using the [DummyJSON Auth API](https://dummyjson.com/docs/auth).
 
-- Random Products API: The Ecommerce Website fetches product data from a random products API, ensuring a dynamic and diverse product catalog.
+- Login is **optional** — the store is fully accessible without an account
+- Click **Login** in the header to open the login modal
+- On successful login, the access token and user data are stored in `localStorage` and restored on page refresh
+- Logout clears all auth state and localStorage
 
-- Single Product Page: Each product has its dedicated page, where users can view detailed information, images, and specifications.
+### Test credentials
 
-- User Authentication: This platform supports user authentication, allowing users to log in and maintain a personalized shopping experience.
+Use any user from [https://dummyjson.com/users](https://dummyjson.com/users). For example:
 
-- Dummy Checkout Process: Users can simulate the checkout process, providing them with a feel for the purchasing journey.
+| Username   | Password       |
+|------------|----------------|
+| `emilys`   | `emilyspass`   |
+| `michaelw` | `michaelwpass` |
 
-- Local Storage: User information is securely stored in the browser's local storage, ensuring their data remains accessible across sessions.
+> You can find a full list of test users at [https://dummyjson.com/users](https://dummyjson.com/users).
 
-- Loader Indicators: Loaders are incorporated to inform users that data is being fetched, enhancing the user experience by providing feedback.
+---
 
-- React Router with Dynamic Routes: Dynamic routing is enabled through React Router, creating a smooth and efficient navigation experience.
+## 🛒 Features
 
-### Technologies Used
+- **Open storefront** — browse, search, filter, and view products with no login required
+- **Product detail pages** — SEO-friendly slug-based URLs (e.g. `/product/apple-iphone-15`)
+- **Search** — debounced live search via DummyJSON `/products/search`
+- **Category filter** — fetches all categories and filters products by category
+- **Sorting** — sort by price (asc/desc) or title
+- **Pagination** — next/previous with automatic scroll-to-top
+- **Cart** — add, remove, update quantity; persisted in localStorage for all users
+- **Checkout gate** — login is prompted only when the user clicks Checkout
+- **Skeleton loaders** — shown while products are loading
+- **Error & empty states** — graceful fallback UI
+- **Responsive design** — mobile-friendly layout with SCSS
 
-- React.js
-- SASS
-- API Integrations
+---
+
+## 📦 Tech Stack & Libraries
+
+| Library                                     | Version | Purpose                         |
+|---------------------------------------------|---------|---------------------------------|
+| [React](https://react.dev)                  | ^18     | UI framework                    |
+| [React Router DOM](https://reactrouter.com) | 5.3.0   | Client-side routing             |
+| [Zustand](https://zustand-demo.pmnd.rs)     | ^5      | Global state management         |
+| [Swiper](https://swiperjs.com)              | ^12     | Product image carousel          |
+| [Sass](https://sass-lang.com)               | ^1.49   | CSS preprocessor                |
+| [DummyJSON](https://dummyjson.com)          | —       | Mock REST API (products + auth) |
+
+---
+
+## 🔗 API Reference (DummyJSON)
+
+| Endpoint                       | Usage                             |
+|--------------------------------|-----------------------------------|
+| `POST /auth/login`             | Authenticate user, receive tokens |
+| `GET /auth/me`                 | Fetch current user with token     |
+| `GET /products`                | Fetch paginated products          |
+| `GET /products/search?q=`      | Search products                   |
+| `GET /products/categories`     | Fetch all categories              |
+| `GET /products/category/:slug` | Products by category              |
+
+---
+
+## 💾 localStorage Keys
+
+| Key            | Contents                          |
+|----------------|-----------------------------------|
+| `auth-storage` | Zustand auth state (user, tokens) |
+| `cart-storage` | Zustand cart items                |
