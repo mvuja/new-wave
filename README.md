@@ -59,7 +59,7 @@ Use any user from [https://dummyjson.com/users](https://dummyjson.com/users). Fo
 
 ---
 
-## 🛒 Features
+## Features
 
 - **Open storefront** — browse, search, filter, and view products with no login required
 - **Product detail pages** — SEO-friendly slug-based URLs (e.g. `/product/apple-iphone-15`)
@@ -75,7 +75,7 @@ Use any user from [https://dummyjson.com/users](https://dummyjson.com/users). Fo
 
 ---
 
-## 📦 Tech Stack & Libraries
+## Tech Stack & Libraries
 
 | Library                                     | Version | Purpose                         |
 |---------------------------------------------|---------|---------------------------------|
@@ -88,7 +88,7 @@ Use any user from [https://dummyjson.com/users](https://dummyjson.com/users). Fo
 
 ---
 
-## 🔗 API Reference (DummyJSON)
+## API Reference (DummyJSON)
 
 | Endpoint                       | Usage                             |
 |--------------------------------|-----------------------------------|
@@ -101,7 +101,7 @@ Use any user from [https://dummyjson.com/users](https://dummyjson.com/users). Fo
 
 ---
 
-## 💾 localStorage Keys
+## localStorage Keys
 
 | Key            | Contents                          |
 |----------------|-----------------------------------|
