@@ -4,15 +4,26 @@ import close from '../../Assets/close.svg'
 import thousandSeparator from '../../utils/thousandSeparator'
 import Card from '../Card/Card'
 import useCartStore from '../../store/useCartStore'
+import { useState } from 'react'
 
 const Cart = ({ cartIsOpen, closeCartHandler, onCheckout }) => {
   const { cartItems } = useCartStore()
+  const [purchasing, setPurchasing] = useState(false)
 
   const cartTotal = Math.round(
     cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) * 100
   ) / 100
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
+
+  const handlePurchase = () => {
+    if (purchasing) return
+    setPurchasing(true)
+    setTimeout(() => {
+      setPurchasing(false)
+      onCheckout(cartCount)
+    }, 800)
+  }
 
   return (
     <aside id="cart" className={cartIsOpen ? 'open' : undefined}>
@@ -49,7 +60,14 @@ const Cart = ({ cartIsOpen, closeCartHandler, onCheckout }) => {
           <p className="cart-total">
             TOTAL: <span>${thousandSeparator(cartTotal)}</span>
           </p>
-          <Button onClick={() => onCheckout(cartCount)}>Purchase</Button>
+          <Button
+            onClick={handlePurchase}
+            icon={!purchasing}
+            adding={purchasing}
+            disabled={purchasing}
+          >
+            {purchasing ? <span className="spinner spinner--dark" /> : 'Purchase'}
+          </Button>
         </div>
       )}
     </aside>
