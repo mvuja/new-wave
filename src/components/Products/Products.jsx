@@ -3,20 +3,10 @@ import useProductStore from '../../store/useProductStore'
 import Card from '../Card/Card'
 import SkeletonCard from '../UI/SkeletonCard'
 import Pagination from '../Pagination/Pagination'
-import Search from '../Search/Search'
-import FilterDropdown from '../FilterDropdown/FilterDropdown'
+import ProductsToolbar, { SORT_OPTIONS } from '../ProductsToolbar/ProductsToolbar'
 import './_products.scss'
 
 import heroImg from '../../Assets/hero-bg.png'
-
-// Sort options available to the user
-const SORT_OPTIONS = [
-  { label: 'Title A–Z',       sortBy: 'title', order: 'asc' },
-  { label: 'Title Z–A',       sortBy: 'title', order: 'desc' },
-  { label: 'Price Low–High',  sortBy: 'price', order: 'asc' },
-  { label: 'Price High–Low',  sortBy: 'price', order: 'desc' },
-  { label: 'Rating',          sortBy: 'rating', order: 'desc' },
-]
 
 const Products = () => {
   const {
@@ -42,9 +32,7 @@ const Products = () => {
     if (opt) setSort(opt.sortBy, opt.order)
   }
 
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' })
   const handleNext = () => { nextPage(); scrollToTop() }
   const handlePrev = () => { prevPage(); scrollToTop() }
 
@@ -56,23 +44,10 @@ const Products = () => {
 
       <div className="container">
         <div className="products-heading">
-          <h2>Products</h2>
-          <Search />
-          <FilterDropdown />
-          <div className="dropdown">
-            <select value={currentSortValue} onChange={handleSortChange}>
-              {SORT_OPTIONS.map((o) => (
-                <option key={`${o.sortBy}_${o.order}`} value={`${o.sortBy}_${o.order}`}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-            </svg>
-          </div>
+          <h2>Products <span className="products-count">{!loading && total > 0 ? `(${total})` : ''}</span></h2>
         </div>
+
+        <ProductsToolbar currentSortValue={currentSortValue} onSortChange={handleSortChange} />
 
         {error && (
           <div className="state-message error-state">

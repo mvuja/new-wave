@@ -16,6 +16,7 @@ import 'swiper/css/pagination'
 import { getProduct, getProductsByCategory } from '../../../api/productsApi'
 import useCartStore from '../../../store/useCartStore'
 import { idFromSlug } from '../../../utils/slugify'
+import SkeletonCard from '../../UI/SkeletonCard'
 
 const ProductPage = () => {
   const { productSlug } = useParams()
@@ -24,6 +25,7 @@ const ProductPage = () => {
 
   const [product, setProduct] = useState(null)
   const [similar, setSimilar] = useState([])
+  const [similarLoading, setSimilarLoading] = useState(true)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
   const [counter, setCounter] = useState(1)
@@ -34,6 +36,7 @@ const ProductPage = () => {
     setNotFound(false)
     setProduct(null)
     setSimilar([])
+    setSimilarLoading(true)
     setCounter(1)
 
     getProduct(productID)
@@ -47,6 +50,7 @@ const ProductPage = () => {
           .then((res) => {
             if (cancelled) return
             setSimilar(res.products.filter((p) => p.id !== data.id).slice(0, 3))
+            setSimilarLoading(false)
           })
       })
       .catch(() => {
@@ -66,12 +70,22 @@ const ProductPage = () => {
     if (counter > 1) setCounter((c) => c - 1)
   }
 
+  const [cartStatus, setCartStatus] = useState('idle') // 'idle' | 'adding' | 'added'
+
+  // ...existing code...
+
   const handleAddToCart = (e) => {
     e.preventDefault()
-    addToCart(
-      { id: product.id, thumbnail: product.thumbnail, title: product.title, price: product.price, category: product.category, description: product.description },
-      counter
-    )
+    if (cartStatus !== 'idle') return
+    setCartStatus('adding')
+    setTimeout(() => {
+      addToCart(
+        { id: product.id, thumbnail: product.thumbnail, title: product.title, price: product.price, category: product.category, description: product.description },
+        counter
+      )
+      setCartStatus('added')
+      setTimeout(() => setCartStatus('idle'), 1200)
+    }, 600)
   }
 
   if (notFound) return <NotFound />
@@ -119,36 +133,48 @@ const ProductPage = () => {
 
               <form onSubmit={handleAddToCart} className="add-to-cart">
                 <div className="quantity-container">
-                  <button className="minus" onClick={quantityMinus}>-</button>
+                  <button className="minus" onClick={quantityMinus} disabled={cartStatus !== 'idle'}>-</button>
                   <input className="product-quantity" type="text" value={counter} readOnly />
-                  <button className="plus" onClick={quantityPlus}>+</button>
+                  <button className="plus" onClick={quantityPlus} disabled={cartStatus !== 'idle'}>+</button>
                 </div>
-                <Button type="submit">Add to cart</Button>
+                <Button
+                  type="submit"
+                  icon={cartStatus === 'idle'}
+                  adding={cartStatus === 'adding'}
+                  added={cartStatus === 'added'}
+                  disabled={cartStatus !== 'idle'}
+                >
+                  {cartStatus === 'adding' && <span className="spinner spinner--dark" />}
+                  {cartStatus === 'added' && '✓ Added'}
+                  {cartStatus === 'idle' && 'Add to cart'}
+                </Button>
               </form>
             </div>
           </div>
-
-          {similar.length > 0 && (
-            <div className="similar-products">
-              <h3>Similar products</h3>
-              <ul className="similar-products-grid">
-                {similar.map((el) => (
-                  <Card
-                    key={el.id}
-                    id={el.id}
-                    img={el.thumbnail}
-                    title={el.title}
-                    price={el.price}
-                    category={el.category}
-                    desc={el.description}
-                    isCart={false}
-                  />
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
+
+      <div className="container">
+        <div className="similar-products">
+          <h3>Similar products</h3>
+          <ul className="similar-products-grid">
+            {similarLoading
+              ? [0, 1, 2].map((i) => <SkeletonCard key={i} />)
+              : similar.map((el) => (
+                <Card
+                  key={el.id}
+                  id={el.id}
+                  img={el.thumbnail}
+                  title={el.title}
+                  price={el.price}
+                  category={el.category}
+                  desc={el.description}
+                  isCart={false}
+                />
+              ))}
+          </ul>
+        </div>
+      </div>
     </section>
   )
 }

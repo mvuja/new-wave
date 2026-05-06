@@ -6,26 +6,28 @@ const Pagination = ({ page, limit, total, onNext, onPrev }) => {
 
   return (
     <div className="pagination">
-      <button
-        className="pagination-btn"
-        onClick={onPrev}
-        disabled={page <= 1}
-      >
-        ← Prev
-      </button>
-
       <span className="pagination-info">
         Page {page} of {totalPages}
         <span className="pagination-count"> &nbsp;({total} items)</span>
       </span>
 
-      <button
-        className="pagination-btn"
-        onClick={onNext}
-        disabled={page * limit >= total}
-      >
-        Next →
-      </button>
+      <div className="pagination-buttons">
+        <button
+          className="pagination-btn"
+          onClick={onPrev}
+          disabled={page <= 1}
+        >
+          ← Prev
+        </button>
+
+        <button
+          className="pagination-btn"
+          onClick={onNext}
+          disabled={page * limit >= total}
+        >
+          Next →
+        </button>
+      </div>
     </div>
   )
 }

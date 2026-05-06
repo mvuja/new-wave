@@ -1,7 +1,24 @@
 .input-search{
-    font-size: 20px;
-    padding: .7rem 1.3rem;
-    color: var(--txt-color-secondary);
+    font-size: 1.5rem;
+    padding: .7rem 1.5rem;
+    color: var(--txt-color-primary);
     border-radius: 100px;
-    border: 1px solid var(--txt-color-secondary);
+    border: 1px solid var(--border-color);
+    background: #fff;
+    min-width: 24rem;
+    transition: border-color .2s ease;
+
+    &:focus{
+        outline: none;
+        border-color: var(--primary-color);
+    }
+
+    &::placeholder{
+        color: var(--txt-color-secondary);
+    }
+
+    @media only screen and (max-width: 800px) {
+        min-width: unset;
+        width: 100%;
+    }
 }

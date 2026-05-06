@@ -9,10 +9,10 @@ const Toast = ({ toastIsOpen, closeToastHandler, toastCounter, userEmail }) => {
     return ( 
         <div id="toast" className={toastIsOpen ? 'active' : undefined}>
             <div className="border-wrap">
-                <p className='bold'>Purchase successful!</p>
+                <p className='bold'>Order placed!</p>
                 <p className='normal'>
-                    {displayName ? `Thank you ${displayName}, your ` : 'Your '}
-                    {toastCounter === 1 ? '1 item has' : `${toastCounter} items have`} been successfully bought.
+                    {displayName ? `Thanks ${displayName}! Your ` : 'Your '}
+                    {toastCounter === 1 ? '1 item has' : `${toastCounter} items have`} been successfully ordered.
                 </p>
                 <button className='close-toast' onClick={closeToastHandler}>
                     <img src={close} alt="" />

@@ -2,19 +2,27 @@ import './_card.scss'
 import Button from '../UI/Button'
 import trash from '../../Assets/trash.svg'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import thousandSeparator from '../../utils/thousandSeparator'
 import useCartStore from '../../store/useCartStore'
 import { toProductSlug } from '../../utils/slugify'
 
 const Card = ({ id, img, title, price, category, desc, isCart }) => {
   const { addToCart, removeFromCart, cartItems } = useCartStore()
+  const [status, setStatus] = useState('idle') // 'idle' | 'adding' | 'added'
 
   const cartItem = cartItems.find((item) => item.id === id)
   const quantity = cartItem?.quantity ?? 0
   const slug = toProductSlug(title, id)
 
   const handleAddToCart = () => {
-    addToCart({ id, thumbnail: img, title, price, category, description: desc })
+    if (status !== 'idle') return
+    setStatus('adding')
+    setTimeout(() => {
+      addToCart({ id, thumbnail: img, title, price, category, description: desc })
+      setStatus('added')
+      setTimeout(() => setStatus('idle'), 1200)
+    }, 600)
   }
 
   return (
@@ -38,7 +46,17 @@ const Card = ({ id, img, title, price, category, desc, isCart }) => {
             <img src={trash} alt="Remove item" />
           </button>
         ) : (
-          <Button onClick={handleAddToCart}>Add to cart</Button>
+          <Button
+            onClick={handleAddToCart}
+            icon={status === 'idle'}
+            adding={status === 'adding'}
+            added={status === 'added'}
+            disabled={status !== 'idle'}
+          >
+            {status === 'adding' && <span className="spinner spinner--dark" />}
+            {status === 'added' && '✓ Added'}
+            {status === 'idle' && 'Add to cart'}
+          </Button>
         )}
       </div>
 

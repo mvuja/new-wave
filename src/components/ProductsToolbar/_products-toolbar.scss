@@ -1,0 +1,41 @@
+.products-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.6rem 2rem;
+    background: #f8f7fa;
+    border-radius: 1.2rem;
+    margin-bottom: 4rem;
+
+    @media only screen and (max-width: 800px) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.6rem;
+    }
+
+    .toolbar-filters{
+        display: flex;
+        gap: 1.6rem;
+
+        @media only screen and (max-width: 500px) {
+            flex-direction: column;
+        }
+    }
+
+    .toolbar-label{
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        span{
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--txt-color-secondary);
+            padding-left: 0.8rem;
+        }
+    }
+}
+

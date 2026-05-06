@@ -13,13 +13,19 @@
     & select{
         border-radius: 100px;
         width: 100%;
-        border: 1px solid var(--txt-color-secondary);
-        padding: .7rem 3.5rem .7rem 1rem;
+        border: 1px solid var(--border-color);
+        padding: .7rem 3.5rem .7rem 1.2rem;
         background-color: #fff;
-        font-size: 20px;
-        color: var(--txt-color-secondary);
+        font-size: 1.5rem;
+        color: var(--txt-color-primary);
         -moz-appearance: none;
         -webkit-appearance: none;
+        cursor: pointer;
+        transition: border-color .2s ease;
+
+        &:hover{
+            border-color: var(--txt-color-secondary);
+        }
 
         &::-ms-expand{
             display: none;

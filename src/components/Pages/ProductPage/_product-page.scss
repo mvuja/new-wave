@@ -70,7 +70,7 @@
                 border-radius: 2rem;
                 overflow: hidden;
                 padding: 3rem 3rem 1rem;
-                max-height: 60rem;
+                height: 60rem;
                 background-color: #fff;
 
                 .swiper{
@@ -182,7 +182,8 @@
                 gap: 7rem;
     
                 @media only screen and (max-width: 768px) {
-                    grid-template-columns: 1fr;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 2rem;
                 }
             }
         }    

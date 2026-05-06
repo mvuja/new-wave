@@ -5,6 +5,7 @@ import logo from '../../Assets/logo.svg'
 import { Link } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore'
 import useCartStore from '../../store/useCartStore'
+import Button from '../UI/Button'
 
 const Navbar = ({ onLoginClick, cartIsOpen, setCartIsOpenHandler }) => {
   const { user, isAuthenticated, logout } = useAuthStore()
@@ -30,8 +31,8 @@ const Navbar = ({ onLoginClick, cartIsOpen, setCartIsOpenHandler }) => {
   return (
     <nav>
       <div className="container">
-        <Link to='/'>
-          <img src={logo} alt="New Wave" className="logo" />
+        <Link to='/' className="logo">
+          <img src={logo} alt="New Wave" />
         </Link>
 
         <div className="nav-right">
@@ -69,9 +70,7 @@ const Navbar = ({ onLoginClick, cartIsOpen, setCartIsOpenHandler }) => {
               )}
             </div>
           ) : (
-            <button className="login-btn" onClick={onLoginClick}>
-              Sign in
-            </button>
+            <Button onClick={onLoginClick} icon={false}>Sign in</Button>
           )}
 
           <button

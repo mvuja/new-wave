@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './_login-modal.scss'
 import useAuthStore from '../../store/useAuthStore'
+import Button from '../UI/Button'
 
 const LoginModal = ({ onClose }) => {
   const { login, loading, error, clearError } = useAuthStore()
@@ -117,9 +118,11 @@ const LoginModal = ({ onClose }) => {
 
           {error && <p className="server-error">{error}</p>}
 
-          <button type="submit" className="modal-submit" disabled={loading}>
-            {loading ? <span className="spinner" /> : 'Sign in'}
-          </button>
+          <div className="modal-submit-wrapper">
+            <Button type="submit" icon={false} onClick={undefined} disabled={loading}>
+              {loading ? <span className="spinner" /> : 'Sign in'}
+            </Button>
+          </div>
         </form>
 
         <p className="modal-note">

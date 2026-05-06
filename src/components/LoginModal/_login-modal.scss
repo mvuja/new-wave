@@ -120,24 +120,18 @@
   margin-bottom: 2rem;
 }
 
-.modal-submit {
-  width: 100%;
-  height: 5rem;
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 0.8rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.15s;
+.modal-submit-wrapper {
   margin-top: 0.8rem;
 
-  &:hover:not(:disabled) { opacity: 0.88; }
-  &:disabled { opacity: 0.6; cursor: default; }
+  .main-btn {
+    width: 100%;
+    height: 5rem;
+    font-size: 1.5rem;
+    min-width: unset;
+    border-radius: 0.8rem;
+
+    &:disabled { opacity: 0.6; cursor: default; }
+  }
 }
 
 .spinner {
